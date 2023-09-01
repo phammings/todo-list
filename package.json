@@ -1,0 +1,32 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "build-tailwind": "npx tailwindcss -i ./src/style.css -o ./dist/stylesheet.css --watch",
+    "start": "tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phammings/todo-list.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phammings/todo-list/issues"
+  },
+  "homepage": "https://github.com/phammings/todo-list#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.2.2",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "uuid": "^9.0.0"
+  }
+}

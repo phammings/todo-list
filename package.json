@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/phammings/todo-list#readme",
   "devDependencies": {
+    "@types/uuid": "^9.0.3",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2",
     "webpack": "^5.88.2",

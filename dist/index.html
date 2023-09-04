@@ -5,20 +5,52 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="main.js" type="module"></script>
-  <title>Document</title>
-  <style>
-    #list {
-      list-style: none;
-      padding: 0;
-    }
-  </style>
+  <title>Todo List</title>
   <link rel="stylesheet" href="/dist/stylesheet.css" />
 </head>
 <body>
-  <ul id="list"></ul>
-  <form id="new-task-form">
-    <input type="text" id="new-task-title">
-    <button type="submit">Add</button>
-  </form>
+  <header class="flex flex-wrap justify-between p-3 bg-blue-600">
+    <div id="logo">
+      <h1 id="page-name" class="text-white font-bold">Todo List</h1>
+    </div>
+    <button id="nav-menu" class="space-y-1 sm:hidden">
+        <div class="w-8 h-1 bg-white"></div>
+        <div class="w-8 h-1 bg-white"></div>
+        <div class="w-8 h-1 bg-white"></div>
+    </button>
+  </header>
+
+  <main class="flex flex-col justify-between min-h-[calc(100vh-88px)] sm:flex-row">
+    <nav id="nav" class="p-5 bg-blue-200 sm:w-64">
+      <div id="default-projects" class="flex flex-col">
+        <button id="all" class="hover:bg-blue-300 m-2 p-1 sm:text-left">All Tasks</button>
+        <button id="today" class="hover:bg-blue-300 m-2 p-1 sm:text-left">Today</button>
+        <button id="week" class="hover:bg-blue-300 m-2 p-1 sm:text-left">This Week</button>
+      </div>
+
+      <div id="projects" class="flex flex-col mt-3">
+        <h1 class="text-lg font-bold text-center sm:text-left">Projects</h1>
+        <div id="project-list"></div>
+        <button id="project-button" class="hover:bg-blue-300 m-2 p-1 sm:text-left">Add Project</button>
+      </div>
+    </nav>
+    
+    <div id="tasks" class="flex flex-col p-5">
+      <h1 class="text-lg font-bold self-center">All Tasks</h1>
+      <div class="mt-5">
+        <ul id="list"></ul>
+        <form id="new-task-form">
+          <input type="text" id="new-task-title" class="border">
+          <button type="submit" class="mt-5">Add</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="invisible"></div>
+  </main>
+
+  <footer class="flex bg-black h-10 items-center justify-center">
+    <p class="text-white">Copyright © 2023 phammings</p>
+  </footer>
 </body>
 </html>

@@ -13,14 +13,15 @@ const initPage = () => {
     
       if (input?.value == "" || input?.value == null) return;
     
-      const newTask: Task = {
-        title: input.value,
-        desc: "",
-        dueDate: new Date(),
-        createdAt: new Date(),
-        isComplete: false,
-        priority: ""
-      }
+      const newTask = new Task(
+        input.value,
+        "Description",
+        new Date(),
+        new Date(),
+        false,
+        "Priority",
+        "Notes"
+        );
       tasks.push(newTask);
       saveTasks(tasks);
     

@@ -1,3 +1,4 @@
+import Task from "./Task";
 import { saveTasks, loadTasks } from "./Storage";
 const initPage = () => {
     const list = document.querySelector("#list");
@@ -9,14 +10,7 @@ const initPage = () => {
         e.preventDefault();
         if ((input === null || input === void 0 ? void 0 : input.value) == "" || (input === null || input === void 0 ? void 0 : input.value) == null)
             return;
-        const newTask = {
-            title: input.value,
-            desc: "",
-            dueDate: new Date(),
-            createdAt: new Date(),
-            isComplete: false,
-            priority: ""
-        };
+        const newTask = new Task(input.value, "Description", new Date(), new Date(), false, "Priority", "Notes");
         tasks.push(newTask);
         saveTasks(tasks);
         addListItem(newTask);

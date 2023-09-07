@@ -33,7 +33,16 @@ function createMain() {
 }
 
 function createFooter() {
+  const footer = document.createElement("footer") as HTMLElement;
+  const paragraph = document.createElement("p") as HTMLParagraphElement;
+  
+  paragraph.textContent = "Copyright © 2023 phammings";
 
+  footer.classList.add("flex", "bg-black", "h-10", "items-center", "justify-center");
+  paragraph.classList.add("text-white");
+
+  footer.appendChild(paragraph);
+  return footer;
 }
 
 function initializeWebsite() {

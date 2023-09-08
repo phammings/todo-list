@@ -1,4 +1,4 @@
-import Task from "src/modules/Task";
+import {Task} from "src/modules/Task";
 
 function saveTasks(tasks: Task[]) {
     localStorage.setItem("TASKS", JSON.stringify(tasks));

@@ -1,4 +1,4 @@
-import loadAllTasks from "/home/ryan/the_odin_project/todo-list/src/modules/allTasks";
+import createProject from "/home/ryan/the_odin_project/todo-list/src/modules/project";
 
 function setActiveButton(button: HTMLButtonElement) {
   const buttons = document.querySelectorAll(".button-nav");
@@ -88,7 +88,7 @@ function createMain() {
       return;
     }
     setActiveButton(allTasksBtn);
-    loadAllTasks();
+    createProject("All Tasks");
   });
 
   todaysTasksBtn.classList.add("button-nav");
@@ -97,7 +97,7 @@ function createMain() {
       return;
     }
     setActiveButton(todaysTasksBtn);
-    //loadTodaysTasks();
+    createProject("Today's Tasks");
   });
 
   weeksTasksBtn.classList.add("button-nav");
@@ -143,7 +143,7 @@ function initializeWebsite() {
   content?.appendChild(createFooter());
 
   setActiveButton(document.querySelector(".button-nav")!);
-  loadAllTasks();
+  createProject("All Tasks");
 }
 
 

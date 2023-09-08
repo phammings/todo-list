@@ -106,7 +106,7 @@ function createMain() {
       return;
     }
     setActiveButton(weeksTasksBtn);
-    //loadWeeksTasks();
+    createProject("This Week's Tasks");
   });
 
   // projectButton.classList.add("button-nav");
@@ -143,6 +143,7 @@ function initializeWebsite() {
   content?.appendChild(createFooter());
 
   setActiveButton(document.querySelector(".button-nav")!);
+  //  Default Homepage
   createProject("All Tasks");
 }
 

@@ -1,12 +1,14 @@
 import {Task, createTasks} from "./Task";
 import {saveTasks, loadTasks} from "./Storage";
 
-function displayTasks() {
+function displayTasks(projectName: string) {
   const list = document.querySelector<HTMLUListElement>("#list");
   const form = document.querySelector<HTMLFormElement>("#new-task-form");
   const input = document.querySelector<HTMLInputElement>("#new-task-title");
-  const tasks: Task[] = loadTasks();
-  tasks.forEach(addListItem);
+  const tasks: Task[] = loadTasks(projectName);
+  tasks.forEach(task => {
+    addListItem(task);
+  });
   
   form?.addEventListener("submit", e => {
     e.preventDefault();
@@ -23,7 +25,7 @@ function displayTasks() {
       "Notes"
       );
     tasks.push(newTask);
-    saveTasks(tasks);
+    saveTasks(tasks, projectName);
   
     addListItem(newTask);
     input.value = "";
@@ -35,7 +37,7 @@ function displayTasks() {
     const checkbox = document.createElement("input");
     checkbox.addEventListener("change", () => {
       task.isComplete = checkbox.checked;
-      saveTasks(tasks);
+      saveTasks(tasks, projectName);
     })
     checkbox.type = "checkbox";
     checkbox.checked = task.isComplete;
@@ -58,7 +60,7 @@ function createProject(projectName: string) {
   dummyDiv.classList.add("invisible");
   content?.appendChild(dummyDiv);
 
-  displayTasks();
+  displayTasks(projectName);
 }
 
 export default createProject;

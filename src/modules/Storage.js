@@ -1,8 +1,8 @@
-function saveTasks(tasks) {
-    localStorage.setItem("TASKS", JSON.stringify(tasks));
+function saveTasks(tasks, projectName) {
+    localStorage.setItem(projectName, JSON.stringify(tasks));
 }
-function loadTasks() {
-    const taskJSON = localStorage.getItem("TASKS");
+function loadTasks(projectName) {
+    const taskJSON = localStorage.getItem(projectName);
     if (taskJSON == null)
         return [];
     return JSON.parse(taskJSON);

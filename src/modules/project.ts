@@ -50,16 +50,11 @@ function displayTasks(projectName: string) {
 function createProject(projectName: string) {
   const content = document.querySelector<HTMLBodyElement>("#content");
   const tasks = document.querySelector("#tasks") as HTMLDivElement;
-  const dummyDiv = document.createElement("div") as HTMLDivElement;
-
+  
   if (tasks !== null) {
     tasks.textContent = "";
   }
   createTasks(projectName);
-
-  dummyDiv.classList.add("invisible");
-  content?.appendChild(dummyDiv);
-
   displayTasks(projectName);
 }
 

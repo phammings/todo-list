@@ -50,6 +50,7 @@ function createMain() {
   const projectList = document.createElement("div") as HTMLDivElement;
   const projectButton = document.createElement("button") as HTMLButtonElement;
   const tasks = document.createElement("div") as HTMLDivElement;
+  const dummyDiv = document.createElement("div") as HTMLDivElement;
 
   projectHeading.textContent = "Projects";
   allTasksBtn.textContent = "All Tasks";
@@ -67,6 +68,7 @@ function createMain() {
   projectHeading.classList.add("text-lg", "font-bold", "text-center", "sm:text-left");
   projectButton.classList.add("hover:bg-blue-300", "m-2", "p-1", "sm:text-left");
   tasks.classList.add("flex", "flex-col", "p-5");
+  dummyDiv.classList.add("invisible");
 
   tasks.setAttribute("id", "tasks");
 
@@ -81,6 +83,7 @@ function createMain() {
 
   main.appendChild(nav);
   main.appendChild(tasks);
+  main.appendChild(dummyDiv);
 
   allTasksBtn.classList.add("button-nav");
   allTasksBtn?.addEventListener("click", (e) => {
@@ -108,6 +111,8 @@ function createMain() {
     setActiveButton(weeksTasksBtn);
     createProject("This Week's Tasks");
   });
+
+  
 
   // projectButton.classList.add("button-nav");
   // projectButton?.addEventListener("click", (e) => {

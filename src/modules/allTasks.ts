@@ -1,54 +1,8 @@
-import Task from "./Task";
+import {Task, createTasks} from "./Task";
 import {saveTasks, loadTasks} from "./Storage";
 
 function createAllTasks() {
-  const tasks = document.getElementById("tasks") as HTMLDivElement;
-  const taskHeading = document.createElement("h1") as HTMLHeadingElement;
-  const taskContainer = document.createElement("div") as HTMLDivElement;
-  const taskList = document.createElement("ul") as HTMLUListElement;
-  const form = document.createElement("form") as HTMLFormElement;
-  const inputBox = document.createElement("input") as HTMLInputElement;
-  const submitButton = document.createElement("button") as HTMLButtonElement;
-
-  taskHeading.classList.add("text-lg", "font-bold", "self-center");
-  taskContainer.classList.add("mt-5");
-  inputBox.classList.add("border");
-  submitButton.classList.add("mt-5");
-
-  taskHeading.textContent = "All Tasks";
-  submitButton.textContent = "Add";
-
-  taskList.setAttribute("id", "list");
-  form.setAttribute("id", "new-task-form");
-  inputBox.setAttribute("id", "new-task-title");
-
-  inputBox.setAttribute("type", "text");
-  submitButton.setAttribute("type", "submit");
-
-  form.appendChild(inputBox);
-  form.appendChild(submitButton);
-  taskContainer.appendChild(taskList);
-  taskContainer.appendChild(form);
-  tasks.appendChild(taskHeading);
-  tasks.appendChild(taskContainer);
-
-  return tasks;
-}
-
-function loadAllTasks() {
-  const content = document.querySelector<HTMLBodyElement>("#content");
-  const tasks = document.querySelector("#tasks") as HTMLDivElement;
-  const dummyDiv = document.createElement("div") as HTMLDivElement;
-
-  if (tasks !== null) {
-    tasks.textContent = "";
-  }
-  createAllTasks();
-
-  dummyDiv.classList.add("invisible");
-  content?.appendChild(dummyDiv);
-
-  displayAllTasks();
+  
 }
 
 function displayAllTasks() {
@@ -93,6 +47,22 @@ function displayAllTasks() {
     item.append(label);
     list?.append(item);
   }
+}
+
+function loadAllTasks() {
+  const content = document.querySelector<HTMLBodyElement>("#content");
+  const tasks = document.querySelector("#tasks") as HTMLDivElement;
+  const dummyDiv = document.createElement("div") as HTMLDivElement;
+
+  if (tasks !== null) {
+    tasks.textContent = "";
+  }
+  createTasks("All Tasks");
+
+  dummyDiv.classList.add("invisible");
+  content?.appendChild(dummyDiv);
+
+  displayAllTasks();
 }
 
 export default loadAllTasks;

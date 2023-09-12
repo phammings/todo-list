@@ -1,4 +1,5 @@
 import createProject from "/home/ryan/the_odin_project/todo-list/src/modules/project";
+import {saveProject, loadProjects} from "/home/ryan/the_odin_project/todo-list/src/modules/storage";
 
 function setActiveButton(button: HTMLButtonElement) {
   const buttons = document.querySelectorAll(".button-nav");
@@ -38,8 +39,9 @@ function createHeader() {
   return header;
 }
 
-function createProjectHeading(projects: HTMLDivElement, projectName: string) {
+function createProjectHeading(projectName: string) {
   const projectButton = document.createElement("button") as HTMLButtonElement;
+  const projectList = document.querySelector<HTMLDivElement>("#project-list");
 
   projectButton.textContent = projectName;
   projectButton.classList.add("hover:bg-blue-300", "m-2", "p-1", "sm:text-left");
@@ -53,7 +55,7 @@ function createProjectHeading(projects: HTMLDivElement, projectName: string) {
     createProject(projectName);
   });
 
-  projects.appendChild(projectButton);
+  projectList?.appendChild(projectButton);
 }
 
 function createProjectPopup() {
@@ -83,7 +85,8 @@ function createProjectPopup() {
   addButton?.addEventListener("click", (e) => {
     if(input && input.value) {
       createProject(input.value);
-      createProjectHeading(projects!, input.value);
+      saveProject(input.value);
+      createProjectHeading(input.value);
       projects?.removeChild(popup);
       projects?.appendChild(projectButton!);
     }
@@ -130,6 +133,7 @@ function createMain() {
   tasks.setAttribute("id", "tasks");
   projects.setAttribute("id", "projects");
   projectButton.setAttribute("id", "project-btn");
+  projectList.setAttribute("id", "project-list");
 
   defaultProjects.appendChild(allTasksBtn);
   defaultProjects.appendChild(todaysTasksBtn);

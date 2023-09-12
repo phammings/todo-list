@@ -72,8 +72,9 @@ function createProjectPopup() {
   cancelButton.textContent = "Cancel";
 
   input.setAttribute("type", "text");
-  addButton.classList.add("bg-green-300");
-  cancelButton.classList.add("bg-red-300");
+  buttons.classList.add("flex", "items-center", "justify-between");
+  addButton.classList.add("bg-green-300", "w-20", "mt-3");
+  cancelButton.classList.add("bg-red-300", "mr-5", "mt-3", "w-20");
 
   buttons.appendChild(addButton);
   buttons.appendChild(cancelButton);

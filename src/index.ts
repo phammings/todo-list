@@ -130,6 +130,7 @@ function createMain() {
   weeksTasksBtn.classList.add("hover:bg-blue-300", "m-2", "p-1", "sm:text-left");
   projects.classList.add("flex", "flex-col", "mt-3");
   projectHeading.classList.add("text-lg", "font-bold", "text-center", "sm:text-left");
+  projectList.classList.add("flex", "flex-col", "mt-3");
   projectButton.classList.add("hover:bg-blue-300", "m-2", "p-1", "sm:text-left");
   tasks.classList.add("flex", "flex-col", "p-5");
   dummyDiv.classList.add("invisible");

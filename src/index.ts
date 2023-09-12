@@ -133,7 +133,7 @@ function createMain() {
   projectHeading.classList.add("text-lg", "font-bold", "text-center", "sm:text-left");
   projectList.classList.add("flex", "flex-col", "mt-3");
   projectButton.classList.add("hover:bg-blue-300", "m-2", "p-1", "sm:text-left");
-  tasks.classList.add("flex", "flex-col", "p-5");
+  tasks.classList.add("flex", "flex-col", "p-5", "items-center");
   dummyDiv.classList.add("invisible");
 
   tasks.setAttribute("id", "tasks");

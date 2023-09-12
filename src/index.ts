@@ -39,10 +39,9 @@ function createHeader() {
   return header;
 }
 
-function createProjectHeading(projectName: string) {
+function createProjectHeading(projectName: string): HTMLButtonElement {
   const projectButton = document.createElement("button") as HTMLButtonElement;
-  const projectList = document.querySelector<HTMLDivElement>("#project-list");
-
+  
   projectButton.textContent = projectName;
   projectButton.classList.add("hover:bg-blue-300", "m-2", "p-1", "sm:text-left");
 
@@ -55,12 +54,13 @@ function createProjectHeading(projectName: string) {
     createProject(projectName);
   });
 
-  projectList?.appendChild(projectButton);
+  return projectButton;
 }
 
 function createProjectPopup() {
   const projects = document.querySelector<HTMLDivElement>("#projects");
   const projectButton = document.querySelector<HTMLButtonElement>("#project-btn");
+  const projectList = document.querySelector<HTMLDivElement>("#project-list");
 
   const popup = document.createElement("div") as HTMLDivElement;
   const input = document.createElement("input") as HTMLInputElement;
@@ -85,8 +85,12 @@ function createProjectPopup() {
   addButton?.addEventListener("click", (e) => {
     if(input && input.value) {
       createProject(input.value);
-      saveProject(input.value);
-      createProjectHeading(input.value);
+      const newProjectHeading = createProjectHeading(input.value) as HTMLButtonElement;
+      projectHeadings.push(input.value);
+      console.log(projectHeadings);
+      saveProject(projectHeadings);
+
+      projectList?.appendChild(newProjectHeading);
       projects?.removeChild(popup);
       projects?.appendChild(projectButton!);
     }
@@ -135,6 +139,13 @@ function createMain() {
   projectButton.setAttribute("id", "project-btn");
   projectList.setAttribute("id", "project-list");
 
+  const allProjects: string[] = loadProjects();
+  console.log(projectHeadings);
+  console.log(allProjects);
+  allProjects.forEach(project => {
+    const projectHeading = createProjectHeading(project);
+    projectList.appendChild(projectHeading);
+  });
   defaultProjects.appendChild(allTasksBtn);
   defaultProjects.appendChild(todaysTasksBtn);
   defaultProjects.appendChild(weeksTasksBtn);
@@ -215,6 +226,5 @@ function initializeWebsite() {
   createProject("All Tasks");
 }
 
-
-
+const projectHeadings: string[] = loadProjects();
 initializeWebsite();

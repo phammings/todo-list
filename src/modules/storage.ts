@@ -10,4 +10,14 @@ function loadTasks(projectName: string): Task[] {
     return JSON.parse(taskJSON);
 }
 
-export {saveTasks, loadTasks};
+function saveProject(projectName: string) {
+    localStorage.setItem("Projects", JSON.stringify(projectName))
+}
+
+function loadProjects(): string[] {
+    const taskJSON = localStorage.getItem("Projects");
+    if (taskJSON == null) return [];
+    return JSON.parse(taskJSON);
+}
+
+export {saveTasks, loadTasks, saveProject, loadProjects};

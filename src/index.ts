@@ -29,6 +29,8 @@ function createHeader() {
   hamburgerIcon2?.classList.add("w-8", "h-1", "bg-white");
   hamburgerIcon3?.classList.add("w-8", "h-1", "bg-white");
 
+  button.setAttribute("id", "menu-btn");
+
   logo.appendChild(pageName);
   button.appendChild(hamburgerIcon1);
   button.appendChild(hamburgerIcon2);
@@ -88,7 +90,6 @@ function createProjectPopup() {
       createProject(input.value);
       const newProjectHeading = createProjectHeading(input.value) as HTMLButtonElement;
       projectHeadings.push(input.value);
-      console.log(projectHeadings);
       saveProject(projectHeadings);
 
       projectList?.appendChild(newProjectHeading);
@@ -116,6 +117,7 @@ function createMain() {
   const projectButton = document.createElement("button") as HTMLButtonElement;
   const tasks = document.createElement("div") as HTMLDivElement;
   const dummyDiv = document.createElement("div") as HTMLDivElement;
+  const menuBtn = document.getElementById("menu-btn") as HTMLButtonElement;
 
   projectHeading.textContent = "Projects";
   allTasksBtn.textContent = "All Tasks";
@@ -142,8 +144,6 @@ function createMain() {
   projectList.setAttribute("id", "project-list");
 
   const allProjects: string[] = loadProjects();
-  console.log(projectHeadings);
-  console.log(allProjects);
   allProjects.forEach(project => {
     const projectHeading = createProjectHeading(project);
     projectList.appendChild(projectHeading);
@@ -160,6 +160,10 @@ function createMain() {
   main.appendChild(nav);
   main.appendChild(tasks);
   main.appendChild(dummyDiv);
+
+  menuBtn.addEventListener("click", (e) => {
+    nav.classList.toggle("hidden");
+  });
 
   allTasksBtn.classList.add("button-nav");
   allTasksBtn?.addEventListener("click", (e) => {
@@ -187,8 +191,6 @@ function createMain() {
     setActiveButton(weeksTasksBtn);
     createProject("This Week's Tasks");
   });
-
-  
 
   projectButton.classList.add("button-nav");
   projectButton?.addEventListener("click", (e) => {

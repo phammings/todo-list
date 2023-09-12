@@ -191,11 +191,6 @@ function createMain() {
   projectButton.classList.add("button-nav");
   projectButton?.addEventListener("click", (e) => {
     createProjectPopup();
-    // if ((e.target as HTMLButtonElement).classList.contains("active")) {
-    //   return;
-    // }
-    // setActiveButton(projectButton);
-    // loadWeeksTasks();
   });
 
   return main;

@@ -38,6 +38,63 @@ function createHeader() {
   return header;
 }
 
+function createProjectHeading(projects: HTMLDivElement, projectName: string) {
+  const projectButton = document.createElement("button") as HTMLButtonElement;
+
+  projectButton.textContent = projectName;
+  projectButton.classList.add("hover:bg-blue-300", "m-2", "p-1", "sm:text-left");
+
+  projectButton.classList.add("button-nav");
+  projectButton?.addEventListener("click", (e) => {
+    if ((e.target as HTMLButtonElement).classList.contains("active")) {
+      return;
+    }
+    setActiveButton(projectButton);
+    createProject(projectName);
+  });
+
+  projects.appendChild(projectButton);
+}
+
+function createProjectPopup() {
+  const projects = document.querySelector<HTMLDivElement>("#projects");
+  const projectButton = document.querySelector<HTMLButtonElement>("#project-btn");
+
+  const popup = document.createElement("div") as HTMLDivElement;
+  const input = document.createElement("input") as HTMLInputElement;
+  const buttons = document.createElement("div") as HTMLDivElement;
+  const addButton = document.createElement("button") as HTMLButtonElement;
+  const cancelButton = document.createElement("button") as HTMLButtonElement;
+
+  addButton.textContent = "Add";
+  cancelButton.textContent = "Cancel";
+
+  input.setAttribute("type", "text");
+  addButton.classList.add("bg-green-300");
+  cancelButton.classList.add("bg-red-300");
+
+  buttons.appendChild(addButton);
+  buttons.appendChild(cancelButton);
+  popup.appendChild(input);
+  popup.appendChild(buttons);
+  projects?.removeChild(projectButton!);
+  projects?.appendChild(popup);
+
+  addButton?.addEventListener("click", (e) => {
+    if(input && input.value) {
+      createProject(input.value);
+      createProjectHeading(projects!, input.value);
+      projects?.removeChild(popup);
+      projects?.appendChild(projectButton!);
+    }
+  });
+
+  cancelButton?.addEventListener("click", (e) => {
+    projects?.removeChild(popup);
+    projects?.appendChild(projectButton!);
+  });
+}
+
 function createMain() {
   const main = document.createElement("main") as HTMLElement;
   const nav = document.createElement("nav") as HTMLElement;
@@ -71,6 +128,8 @@ function createMain() {
   dummyDiv.classList.add("invisible");
 
   tasks.setAttribute("id", "tasks");
+  projects.setAttribute("id", "projects");
+  projectButton.setAttribute("id", "project-btn");
 
   defaultProjects.appendChild(allTasksBtn);
   defaultProjects.appendChild(todaysTasksBtn);
@@ -114,15 +173,15 @@ function createMain() {
 
   
 
-  // projectButton.classList.add("button-nav");
-  // projectButton?.addEventListener("click", (e) => {
-  //   if ((e.target as HTMLButtonElement).classList.contains("active")) {
-  //     return;
-  //   }
-  //   setActiveButton(projectButton);
-  //   loadWeeksTasks();
-  // });
-  // setActiveButton(projectButton);
+  projectButton.classList.add("button-nav");
+  projectButton?.addEventListener("click", (e) => {
+    createProjectPopup();
+    // if ((e.target as HTMLButtonElement).classList.contains("active")) {
+    //   return;
+    // }
+    // setActiveButton(projectButton);
+    // loadWeeksTasks();
+  });
 
   return main;
 }

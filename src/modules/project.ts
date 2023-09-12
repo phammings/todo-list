@@ -1,5 +1,5 @@
-import {Task, createTasks} from "./Task";
-import {saveTasks, loadTasks} from "./Storage";
+import {Task, createTasks} from "./task";
+import {saveTasks, loadTasks} from "./storage";
 
 function displayTasks(projectName: string) {
   const list = document.querySelector<HTMLUListElement>("#list");
@@ -48,7 +48,6 @@ function displayTasks(projectName: string) {
 }
 
 function createProject(projectName: string) {
-  const content = document.querySelector<HTMLBodyElement>("#content");
   const tasks = document.querySelector("#tasks") as HTMLDivElement;
   
   if (tasks !== null) {

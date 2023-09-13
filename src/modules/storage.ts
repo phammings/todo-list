@@ -20,4 +20,11 @@ function loadProjects(): string[] {
     return JSON.parse(taskJSON);
 }
 
-export {saveTasks, loadTasks, saveProject, loadProjects};
+function deleteProject(projectName: string) {
+    let projects = loadProjects();
+    const index = projects.indexOf(projectName);
+    projects = projects.splice(index, 1);
+    saveProject(projects);
+}
+
+export {saveTasks, loadTasks, saveProject, loadProjects, deleteProject};

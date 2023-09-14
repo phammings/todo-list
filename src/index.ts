@@ -45,7 +45,7 @@ function createProjectHeading(projectName: string): HTMLButtonElement {
   const projectButton = document.createElement("button") as HTMLButtonElement;
   
   projectButton.textContent = projectName;
-  projectButton.classList.add("hover:bg-blue-300", "m-2", "p-1", "sm:text-left");
+  projectButton.classList.add("group-hover:bg-blue-300", "m-2", "p-1", "sm:text-left");
 
   projectButton.classList.add("button-nav");
   projectButton?.addEventListener("click", (e) => {
@@ -88,11 +88,11 @@ function createProjectPopup() {
   addButton?.addEventListener("click", (e) => {
     if(input && input.value) {
       createProject(input.value);
-      const newProjectHeading = createProjectHeading(input.value) as HTMLButtonElement;
+      const btnContainer = createBtnContainer(input.value);
       projectHeadings.push(input.value);
       saveProject(projectHeadings);
 
-      projectList?.appendChild(newProjectHeading);
+      projectList?.appendChild(btnContainer);
       projects?.removeChild(popup);
       projects?.appendChild(projectButton!);
     }
@@ -102,6 +102,25 @@ function createProjectPopup() {
     projects?.removeChild(popup);
     projects?.appendChild(projectButton!);
   });
+}
+
+function createBtnContainer(project: string) {
+  const btnContainer = document.createElement("div") as HTMLDivElement;
+  const deleteProjectBtn = document.createElement("button") as HTMLButtonElement;
+  const projectHeading = createProjectHeading(project);
+
+  deleteProjectBtn.textContent = "X";
+  btnContainer.classList.add("flex", "flex-row", "group");
+  deleteProjectBtn.classList.add("ml-auto", "opacity-0", "group-hover:opacity-100");
+
+  btnContainer.appendChild(projectHeading);
+  btnContainer.appendChild(deleteProjectBtn);
+
+  deleteProjectBtn.addEventListener("click", (e) => {
+    deleteProject(project);
+    //projectList.removeChild(projectHeading);
+  });
+  return btnContainer;
 }
 
 function createMain() {
@@ -145,16 +164,7 @@ function createMain() {
 
   const allProjects: string[] = loadProjects();
   allProjects.forEach(project => {
-    const btnContainer = document.createElement("div") as HTMLDivElement;
-    const deleteProjectBtn = document.createElement("button") as HTMLButtonElement;
-    const projectHeading = createProjectHeading(project);
-
-    deleteProjectBtn.textContent = "X";
-    btnContainer.classList.add("flex", "flex-row", "group");
-    deleteProjectBtn.classList.add("ml-auto", "opacity-0", "group-hover:opacity-100");
-
-    btnContainer.appendChild(projectHeading);
-    btnContainer.appendChild(deleteProjectBtn);
+    const btnContainer = createBtnContainer(project);
     projectList.appendChild(btnContainer);
   });
   defaultProjects.appendChild(allTasksBtn);

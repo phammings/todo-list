@@ -108,6 +108,7 @@ function createBtnContainer(project: string) {
   const btnContainer = document.createElement("div") as HTMLDivElement;
   const deleteProjectBtn = document.createElement("button") as HTMLButtonElement;
   const projectHeading = createProjectHeading(project);
+  const projectList = document.querySelector<HTMLDivElement>("#project-list");
 
   deleteProjectBtn.textContent = "X";
   btnContainer.classList.add("flex", "flex-row", "group");
@@ -118,7 +119,13 @@ function createBtnContainer(project: string) {
 
   deleteProjectBtn.addEventListener("click", (e) => {
     deleteProject(project);
-    //projectList.removeChild(projectHeading);
+    // Work around to delete project headings after refreshing page since btnContainer refers to previous element before refresh
+    btnContainer.classList.add("hidden");
+    
+    projectList?.removeChild(btnContainer);
+    console.log(projectHeadings);
+    projectHeadings = loadProjects();
+    console.log(projectHeadings);
   });
   return btnContainer;
 }
@@ -244,5 +251,5 @@ function initializeWebsite() {
   createProject("All Tasks");
 }
 
-const projectHeadings: string[] = loadProjects();
+let projectHeadings: string[] = loadProjects();
 initializeWebsite();

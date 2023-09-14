@@ -1,5 +1,5 @@
 import createProject from "/home/ryan/the_odin_project/todo-list/src/modules/project";
-import {saveProject, loadProjects} from "/home/ryan/the_odin_project/todo-list/src/modules/storage";
+import {saveProject, loadProjects, deleteProject} from "/home/ryan/the_odin_project/todo-list/src/modules/storage";
 
 function setActiveButton(button: HTMLButtonElement) {
   const buttons = document.querySelectorAll(".button-nav");
@@ -134,7 +134,7 @@ function createMain() {
   projects.classList.add("flex", "flex-col", "mt-3");
   projectHeading.classList.add("text-lg", "font-bold", "text-center", "sm:text-left");
   projectList.classList.add("flex", "flex-col", "mt-3");
-  projectButton.classList.add("hover:bg-blue-300", "m-2", "p-1", "sm:text-left");
+  projectButton.classList.add("group-hover:bg-blue-300", "m-2", "p-1", "sm:text-left");
   tasks.classList.add("flex", "flex-col", "p-5", "items-center");
   dummyDiv.classList.add("invisible");
 
@@ -145,8 +145,17 @@ function createMain() {
 
   const allProjects: string[] = loadProjects();
   allProjects.forEach(project => {
+    const btnContainer = document.createElement("div") as HTMLDivElement;
+    const deleteProjectBtn = document.createElement("button") as HTMLButtonElement;
     const projectHeading = createProjectHeading(project);
-    projectList.appendChild(projectHeading);
+
+    deleteProjectBtn.textContent = "X";
+    btnContainer.classList.add("flex", "flex-row", "group");
+    deleteProjectBtn.classList.add("ml-auto", "opacity-0", "group-hover:opacity-100");
+
+    btnContainer.appendChild(projectHeading);
+    btnContainer.appendChild(deleteProjectBtn);
+    projectList.appendChild(btnContainer);
   });
   defaultProjects.appendChild(allTasksBtn);
   defaultProjects.appendChild(todaysTasksBtn);

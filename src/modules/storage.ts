@@ -10,6 +10,13 @@ function loadTasks(projectName: string): Task[] {
     return JSON.parse(taskJSON);
 }
 
+function deleteTask(projectName: string, taskName: Task) {
+    let tasks: Task[] = loadTasks(projectName);
+    const taskIndex = tasks.findIndex((task) => task.title === taskName.title);
+    tasks.splice(taskIndex, 1);
+    saveTasks(tasks, projectName);
+}
+
 function saveProject(projects: string[]) {
     localStorage.setItem("Projects", JSON.stringify(projects))
 }
@@ -22,9 +29,8 @@ function loadProjects(): string[] {
 
 function deleteProject(projectName: string) {
     let projects = loadProjects();
-    const index = projects.indexOf(projectName);
-    projects = projects.splice(index, 1);
+    projects = projects.filter(project => project !== projectName);
     saveProject(projects);
 }
 
-export {saveTasks, loadTasks, saveProject, loadProjects, deleteProject};
+export {saveTasks, loadTasks, saveProject, loadProjects, deleteProject, deleteTask};

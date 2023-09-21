@@ -1,5 +1,5 @@
-import {Task, createTasks, createListItem, createCheckBox} from "./task";
-import {saveTasks, loadTasks} from "./storage";
+import {Task, createTasks, createListItem, createCheckBox, createEditIcon, createDeleteIcon} from "./task";
+import {saveTasks, loadTasks, deleteTask} from "./storage";
 
 function displayTasks(projectName: string) {
   const list = document.querySelector<HTMLUListElement>("#list");
@@ -33,11 +33,25 @@ function displayTasks(projectName: string) {
 
   function addListItem(task: Task) {
     const checkbox = createCheckBox();
+    const editIcon = createEditIcon();
+    const deleteIcon = createDeleteIcon();
+
     checkbox.addEventListener("change", () => {
       task.isComplete = checkbox.checked;
       saveTasks(tasks, projectName);
-    })
-    const item = createListItem(task, checkbox);
+    });
+
+    editIcon.addEventListener("click", () => {
+      //  Open popup
+    });
+
+    deleteIcon.addEventListener("click", () => {
+      deleteTask(projectName, task);
+      const taskContainer = deleteIcon.parentNode as HTMLLIElement;
+      taskContainer.innerHTML = "";
+    });
+
+    const item = createListItem(task, checkbox, editIcon, deleteIcon);
 
     list?.append(item);
   }

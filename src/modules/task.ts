@@ -61,31 +61,40 @@ function createTasks(taskName: string) {
 }
 
 function createCheckBox() {
-    return document.createElement("input");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.classList.add("mr-4");
+    return checkbox;
 }
 
-function createListItem(task: Task, checkbox: HTMLInputElement) {
+function createEditIcon() {
+    const editIcon = document.createElement("button");
+    editIcon.textContent = "...";
+    editIcon.classList.add("ml-auto");
+    return editIcon;
+}
+
+function createDeleteIcon() {
+    const deleteIcon = document.createElement("button");
+    deleteIcon.textContent = "X";
+    deleteIcon.classList.add("ml-4");
+    return deleteIcon;
+}
+
+function createListItem(task: Task, checkbox: HTMLInputElement, editIcon: HTMLButtonElement, deleteIcon: HTMLButtonElement) {
     const item = document.createElement("li");
     const label = document.createElement("label");
-    const editIcon = document.createElement("label");
-    const deleteIcon = document.createElement("label");
-
-    editIcon.textContent = "...";
-    deleteIcon.textContent = "X";
-    checkbox.type = "checkbox";
+    
     checkbox.checked = task.isComplete;
-
     item.classList.add("flex", "sm:w-96");
-    editIcon.classList.add("ml-auto");
-    deleteIcon.classList.add("ml-4");
-
+    
     label.append(checkbox, task.title);
     item.append(label, editIcon, deleteIcon);
 
     return item;
 }
     
-export {Task, createTasks, createListItem, createCheckBox};
+export {Task, createTasks, createListItem, createCheckBox, createEditIcon, createDeleteIcon};
     
 
     

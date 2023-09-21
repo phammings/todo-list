@@ -60,7 +60,7 @@ function createTasks(taskName: string) {
     return tasks;
 }
 
-function createCheckBox(task: Task) {
+function createCheckBox() {
     return document.createElement("input");
 }
 
@@ -81,7 +81,7 @@ function createListItem(task: Task, projectName: string, checkbox: HTMLInputElem
 
     label.append(checkbox, task.title);
     item.append(label, editIcon, deleteIcon);
-    
+
     return item;
 }
     

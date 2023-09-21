@@ -32,13 +32,13 @@ function displayTasks(projectName: string) {
   })
 
   function addListItem(task: Task) {
-    const checkbox = createCheckBox(task);
+    const checkbox = createCheckBox();
     checkbox.addEventListener("change", () => {
       task.isComplete = checkbox.checked;
       saveTasks(tasks, projectName);
     })
     const item = createListItem(task, projectName, checkbox);
-    
+
     list?.append(item);
   }
 }

@@ -37,7 +37,7 @@ function displayTasks(projectName: string) {
       task.isComplete = checkbox.checked;
       saveTasks(tasks, projectName);
     })
-    const item = createListItem(task, projectName, checkbox);
+    const item = createListItem(task, checkbox);
 
     list?.append(item);
   }

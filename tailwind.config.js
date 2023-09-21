@@ -2,7 +2,8 @@
 module.exports = {
     content: [
       "./dist/index.html",
-      "./src/index.js"],
+      "./src/index.js",
+      "./src/modules/task.js"],
     theme: {
       extend: {},
     },

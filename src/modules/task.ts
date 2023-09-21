@@ -59,8 +59,33 @@ function createTasks(taskName: string) {
 
     return tasks;
 }
+
+function createCheckBox(task: Task) {
+    return document.createElement("input");
+}
+
+function createListItem(task: Task, projectName: string, checkbox: HTMLInputElement) {
+    const item = document.createElement("li");
+    const label = document.createElement("label");
+    const editIcon = document.createElement("label");
+    const deleteIcon = document.createElement("label");
+
+    editIcon.textContent = "...";
+    deleteIcon.textContent = "X";
+    checkbox.type = "checkbox";
+    checkbox.checked = task.isComplete;
+
+    item.classList.add("flex", "sm:w-80");
+    editIcon.classList.add("ml-auto");
+    deleteIcon.classList.add("ml-4");
+
+    label.append(checkbox, task.title);
+    item.append(label, editIcon, deleteIcon);
     
-export {Task, createTasks};
+    return item;
+}
+    
+export {Task, createTasks, createListItem, createCheckBox};
     
 
     

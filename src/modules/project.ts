@@ -1,4 +1,4 @@
-import {Task, createTasks} from "./task";
+import {Task, createTasks, createListItem, createCheckBox} from "./task";
 import {saveTasks, loadTasks} from "./storage";
 
 function displayTasks(projectName: string) {
@@ -32,17 +32,13 @@ function displayTasks(projectName: string) {
   })
 
   function addListItem(task: Task) {
-    const item = document.createElement("li");
-    const label = document.createElement("label");
-    const checkbox = document.createElement("input");
+    const checkbox = createCheckBox(task);
     checkbox.addEventListener("change", () => {
       task.isComplete = checkbox.checked;
       saveTasks(tasks, projectName);
     })
-    checkbox.type = "checkbox";
-    checkbox.checked = task.isComplete;
-    label.append(checkbox, task.title);
-    item.append(label);
+    const item = createListItem(task, projectName, checkbox);
+    
     list?.append(item);
   }
 }

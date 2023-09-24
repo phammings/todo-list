@@ -111,7 +111,7 @@ function createBtnContainer(project: string) {
   const projectList = document.querySelector<HTMLDivElement>("#project-list");
 
   deleteProjectBtn.textContent = "X";
-  btnContainer.classList.add("flex", "flex-row", "group");
+  btnContainer.classList.add("flex", "flex-row", "group", "mx-20", "sm:mx-0");
   deleteProjectBtn.classList.add("ml-auto", "opacity-0", "group-hover:opacity-100");
 
   btnContainer.appendChild(projectHeading);
@@ -121,7 +121,7 @@ function createBtnContainer(project: string) {
     deleteProject(project);
     // Work around to delete project headings after refreshing page since btnContainer refers to previous element before refresh
     btnContainer.classList.add("hidden");
-    
+
     projectList?.removeChild(btnContainer);
     console.log(projectHeadings);
     projectHeadings = loadProjects();

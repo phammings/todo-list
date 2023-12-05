@@ -93,73 +93,8 @@ function createListItem(task: Task, checkbox: HTMLInputElement, editIcon: HTMLBu
 
     return item;
 }
-
-function createEditTaskPopup(task: Task) {
-    const body = document.querySelector("#content") as HTMLBodyElement;
-    const popupContainer = document.createElement("div") as HTMLDivElement;
-    const popup = document.createElement("div") as HTMLDivElement;
-    const closeBtn = document.createElement("button") as HTMLButtonElement;
-    const editTitleBtn = document.createElement("button") as HTMLButtonElement;
-    const doneBtn = document.createElement("button") as HTMLButtonElement;
-    const descBox = document.createElement("input") as HTMLInputElement;
-    const dueDate = document.createElement("input") as HTMLInputElement;
-    const priorityInput1 = document.createElement("input") as HTMLInputElement;
-    const priorityInput2 = document.createElement("input") as HTMLInputElement;
-    const priorityInput3 = document.createElement("input") as HTMLInputElement;
-    const titleHeading = document.createElement("h1") as HTMLHeadingElement;
-    const descHeading = document.createElement("h2") as HTMLHeadingElement;
-    const dueDateHeading = document.createElement("h2") as HTMLHeadingElement;
-    const priorityHeading = document.createElement("h2") as HTMLHeadingElement;
-    const titleContainer = document.createElement("div") as HTMLDivElement;
-    const descContainer = document.createElement("div") as HTMLDivElement;
-    const dueDateContainer = document.createElement("div") as HTMLDivElement;
-    const priorityContainer = document.createElement("div") as HTMLDivElement;
-
-    titleHeading.textContent = task.title;
-    descHeading.textContent = "Description";
-    dueDateHeading.textContent = "Due Date";
-    priorityHeading.textContent = "Priority";
-    editTitleBtn.textContent = "...";
-    closeBtn.textContent = "X";
-    doneBtn.textContent = "Done";
-
-    descBox.setAttribute("type", "text");
-    dueDate.setAttribute("type", "date");
-    priorityInput1.setAttribute("type", "radio");
-    priorityInput2.setAttribute("type", "radio");
-    priorityInput3.setAttribute("type", "radio");
-
-    popupContainer.classList.add("fixed", "inset-0", "bg-black", "opacity-80");
-    popup.classList.add("flex", "flex-col", "items-center", "absolute", "w-1/2", "h-1/2", "bg-white", "inset-0", "m-auto");
-    titleContainer.classList.add("flex", "flex-col", "mr-auto", "ml-4", "sm:flex-row");
-    descContainer.classList.add("flex", "flex-col", "mr-auto", "ml-4", "sm:flex-row");
-    dueDateContainer.classList.add("flex", "flex-col", "mr-auto", "ml-4", "sm:flex-row");
-    priorityContainer.classList.add("flex", "flex-col", "mr-auto", "ml-4", "sm:flex-row");
-    doneBtn.classList.add("flex", "flex-col", "sm:flex-row");  
-    closeBtn.classList.add("ml-auto", "my-4", "mr-4");
-
-    titleContainer.append(titleHeading, editTitleBtn);
-    descContainer.append(descHeading, descBox);
-    dueDateContainer.append(dueDateHeading, dueDate);
-    priorityContainer.append(priorityHeading, priorityInput1, priorityInput2, priorityInput3);
-
-    popup.append(closeBtn, titleContainer, descContainer, dueDateContainer, priorityContainer, doneBtn);
-    body.appendChild(popupContainer);
-    body.appendChild(popup);
-
-    popupContainer.addEventListener("click", () => {
-        body.removeChild(popupContainer);
-        body.removeChild(popup);
-    });
-
-    closeBtn.addEventListener("click", () => {
-        body.removeChild(popupContainer);
-        body.removeChild(popup);
-    });
-
-}
     
-export {Task, createTasks, createListItem, createCheckBox, createEditIcon, createDeleteIcon, createEditTaskPopup};
+export {Task, createTasks, createListItem, createCheckBox, createEditIcon, createDeleteIcon};
     
 
     

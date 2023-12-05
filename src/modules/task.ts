@@ -93,11 +93,21 @@ function createListItem(task: Task, checkbox: HTMLInputElement, editIcon: HTMLBu
 
     return item;
 }
-    
-export {Task, createTasks, createListItem, createCheckBox, createEditIcon, createDeleteIcon};
-    
 
-    
-    
-
-
+function createEditTaskPopup(task: Task) {
+    const body = document.querySelector("#content") as HTMLBodyElement;
+    const popupContainer = document.createElement("div") as HTMLDivElement;
+    const popup = document.createElement("div") as HTMLDivElement;
+    const closeBtn = document.createElement("button") as HTMLButtonElement;
+    const editTitleBtn = document.createElement("button") as HTMLButtonElement;
+    const doneBtn = document.createElement("button") as HTMLButtonElement;
+    const descBox = document.createElement("input") as HTMLInputElement;
+    const dueDate = document.createElement("input") as HTMLInputElement;
+    const priorityInput1 = document.createElement("input") as HTMLInputElement;
+    const priorityInput2 = document.createElement("input") as HTMLInputElement;
+    const priorityInput3 = document.createElement("input") as HTMLInputElement;
+    const titleHeading = document.createElement("h1") as HTMLHeadingElement;
+    const descHeading = document.createElement("h2") as HTMLHeadingElement;
+    const dueDateHeading = document.createElement("h2") as HTMLHeadingElement;
+    const priorityHeading = document.createElement("h2") as HTMLHeadingElement;
+    const titleContainer = document.createElement("div") as HTMLDivE

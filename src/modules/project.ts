@@ -1,4 +1,4 @@
-import {Task, createTasks, createListItem, createCheckBox, createEditIcon, createDeleteIcon} from "./task";
+import {Task, createTasks, createListItem, createCheckBox, createEditIcon, createDeleteIcon, createEditTaskPopup} from "./task";
 import {saveTasks, loadTasks, deleteTask} from "./storage";
 
 function displayTasks(projectName: string) {
@@ -29,7 +29,7 @@ function displayTasks(projectName: string) {
   
     addListItem(newTask);
     input.value = "";
-  })
+  });
 
   function addListItem(task: Task) {
     const checkbox = createCheckBox();
@@ -42,7 +42,7 @@ function displayTasks(projectName: string) {
     });
 
     editIcon.addEventListener("click", () => {
-      //  Open popup
+      createEditTaskPopup(task);
     });
 
     deleteIcon.addEventListener("click", () => {

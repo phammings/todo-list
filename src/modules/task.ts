@@ -38,7 +38,7 @@ function createTasks(taskName: string) {
     taskHeading.classList.add("text-lg", "font-bold", "self-center");
     taskContainer.classList.add("mt-5");
     form.classList.add("flex", "sm:w-96", "mt-5");
-    inputBox.classList.add("border", "mt-5");
+    inputBox.classList.add("border", "mr-5", "mt-5");
     submitButton.classList.add("ml-auto", "mt-5");
 
     taskHeading.textContent = taskName;
@@ -169,6 +169,28 @@ function createEditTaskPopup(task: Task) {
     closeBtn.addEventListener("click", () => {
         body.removeChild(popupContainer);
         body.removeChild(popup);
+    });
+
+    titleHeading.addEventListener("click", () => {
+        const inputElement = document.createElement("input");
+        inputElement.type = "text";
+        inputElement.textContent = titleHeading.textContent;
+
+        titleHeading.replaceWith(inputElement);
+
+        inputElement.focus();
+        inputElement.select();
+
+        inputElement.addEventListener("blur", function () {
+            titleHeading.textContent = inputElement.textContent;
+            if (inputElement.textContent != null) {
+                task.title = inputElement.textContent;
+            }
+            createEditTaskPopup(task);
+            body.removeChild(popupContainer);
+            body.removeChild(popup);
+            
+        });
     });
 
 }

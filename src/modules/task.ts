@@ -122,15 +122,15 @@ function createEditTaskPopup(task: Task) {
 
     titleHeading.textContent = task.title;
     descHeading.textContent = "Description";
+    descBox.value = task.desc;
     dueDateHeading.textContent = "Due Date";
     priorityHeading.textContent = "Priority";
     editTitleHeading.textContent = "(click name to edit)";
     closeBtn.textContent = "X";
     doneBtn.textContent = "Done";
 
-    const currentDate = new Date();
-    const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
-    dueDate.value = formattedDate;
+    const dateSaved = new Date(task.dueDate);
+    dueDate.value = `${dateSaved.getFullYear()}-${(dateSaved.getMonth() + 1).toString().padStart(2, '0')}-${dateSaved.getDate().toString().padStart(2, '0')}`;
 
     descBox.setAttribute("type", "text");
     dueDate.setAttribute("type", "date");
@@ -187,7 +187,7 @@ function createEditTaskPopup(task: Task) {
         descBox.addEventListener("blur", () => {
             const foundTask = tasks.find(task => task.title === titleHeading.textContent);
             if (foundTask) {
-                foundTask.desc = descBox.textContent ?? "";
+                foundTask.desc = descBox.value ?? "";
                 saveTasks(tasks, projectName.textContent ?? "");
             }
         });
@@ -200,7 +200,10 @@ function createEditTaskPopup(task: Task) {
         dueDate.addEventListener("blur", () => {
             const foundTask = tasks.find(task => task.title === titleHeading.textContent);
             if (foundTask && dueDate.valueAsDate != null) {
-                foundTask.dueDate = dueDate.valueAsDate;
+                const modifiedDueDate = new Date(dueDate.valueAsDate);
+                modifiedDueDate.setDate(modifiedDueDate.getDate() + 1);
+
+                foundTask.dueDate = modifiedDueDate;
                 saveTasks(tasks, projectName.textContent ?? "");
             }
         });

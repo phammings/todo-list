@@ -176,7 +176,7 @@ function createEditTaskPopup(task: Task) {
 
         const inputElement = document.createElement("input");
         inputElement.type = "text";
-        inputElement.textContent = titleHeading.textContent;
+        inputElement.value = titleHeading.textContent ?? "";
 
         titleHeading.replaceWith(inputElement);
 
@@ -184,15 +184,10 @@ function createEditTaskPopup(task: Task) {
         inputElement.select();
 
         inputElement.addEventListener("blur", function () {
-            titleHeading.textContent = inputElement.textContent;
-            if (inputElement.textContent != null) {
-                task.title = inputElement.textContent;
-            }
+            console.log(inputElement.value);
+            titleHeading.textContent = inputElement.value;
+            inputElement.replaceWith(titleHeading);
             editTitleHeading.textContent = "(click name to edit)";
-            createEditTaskPopup(task);
-            body.removeChild(popupContainer);
-            body.removeChild(popup);
-            
         });
     });
 

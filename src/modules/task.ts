@@ -193,6 +193,19 @@ function createEditTaskPopup(task: Task) {
         });
     });
 
+    dueDate.addEventListener("click", () => {
+        dueDate.focus();
+        dueDate.select();
+        
+        dueDate.addEventListener("blur", () => {
+            const foundTask = tasks.find(task => task.title === titleHeading.textContent);
+            if (foundTask && dueDate.valueAsDate != null) {
+                foundTask.dueDate = dueDate.valueAsDate;
+                saveTasks(tasks, projectName.textContent ?? "");
+            }
+        });
+    });
+
     titleHeading.addEventListener("click", () => {
         editTitleHeading.textContent = "(click outside to change name)";
 

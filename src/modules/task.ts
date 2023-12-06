@@ -100,7 +100,7 @@ function createEditTaskPopup(task: Task) {
     const popupContainer = document.createElement("div") as HTMLDivElement;
     const popup = document.createElement("div") as HTMLDivElement;
     const closeBtn = document.createElement("button") as HTMLButtonElement;
-    const editTitleBtn = document.createElement("p") as HTMLParagraphElement;
+    const editTitleHeading = document.createElement("p") as HTMLParagraphElement;
     const doneBtn = document.createElement("button") as HTMLButtonElement;
     const descBox = document.createElement("input") as HTMLInputElement;
     const dueDate = document.createElement("input") as HTMLInputElement;
@@ -120,7 +120,7 @@ function createEditTaskPopup(task: Task) {
     descHeading.textContent = "Description";
     dueDateHeading.textContent = "Due Date";
     priorityHeading.textContent = "Priority";
-    editTitleBtn.textContent = "(click name to edit)";
+    editTitleHeading.textContent = "(click name to edit)";
     closeBtn.textContent = "X";
     doneBtn.textContent = "Done";
 
@@ -143,7 +143,7 @@ function createEditTaskPopup(task: Task) {
     doneBtn.classList.add("flex", "flex-col", "mb-5", "bg-blue-500", "hover:bg-blue-700", "text-white", "font-bold", "py-2", "px-4", "border", "border-blue-700", "rounded");  
     closeBtn.classList.add("ml-auto", "mt-4", "mr-4");
     titleHeading.classList.add("text-xl");
-    editTitleBtn.classList.add("text-xs");
+    editTitleHeading.classList.add("mx-auto", "text-xs");
 
     titleHeading.classList.add("self-center");
     descHeading.classList.add("mx-auto", "mb-4");
@@ -152,7 +152,7 @@ function createEditTaskPopup(task: Task) {
     dueDate.classList.add("ml-0");
     priorityInput1.classList.add("ml-4");
     
-    titleContainer.append(titleHeading, editTitleBtn);
+    titleContainer.append(titleHeading, editTitleHeading);
     descContainer.append(descHeading, descBox);
     dueDateContainer.append(dueDateHeading, dueDate);
     priorityContainer.append(priorityHeading, priorityInput1, priorityInput2, priorityInput3);
@@ -172,6 +172,8 @@ function createEditTaskPopup(task: Task) {
     });
 
     titleHeading.addEventListener("click", () => {
+        editTitleHeading.textContent = "(click outside to change name)";
+
         const inputElement = document.createElement("input");
         inputElement.type = "text";
         inputElement.textContent = titleHeading.textContent;
@@ -186,6 +188,7 @@ function createEditTaskPopup(task: Task) {
             if (inputElement.textContent != null) {
                 task.title = inputElement.textContent;
             }
+            editTitleHeading.textContent = "(click name to edit)";
             createEditTaskPopup(task);
             body.removeChild(popupContainer);
             body.removeChild(popup);

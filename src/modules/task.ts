@@ -1,3 +1,6 @@
+import createProject from "./project";
+import { loadTasks, saveTasks } from "./storage";
+
 class Task {
     title: string;
     desc: string;
@@ -26,24 +29,25 @@ class Task {
     }
 }
 
-function createTasks(taskName: string) {
+function createTasks(projectName: string) {
     const tasks = document.getElementById("tasks") as HTMLDivElement;
-    const taskHeading = document.createElement("h1") as HTMLHeadingElement;
+    const projectHeading = document.createElement("h1") as HTMLHeadingElement;
     const taskContainer = document.createElement("div") as HTMLDivElement;
     const taskList = document.createElement("ul") as HTMLUListElement;
     const form = document.createElement("form") as HTMLFormElement;
     const inputBox = document.createElement("input") as HTMLInputElement;
     const submitButton = document.createElement("button") as HTMLButtonElement;
 
-    taskHeading.classList.add("text-lg", "font-bold", "self-center");
+    projectHeading.classList.add("text-lg", "font-bold", "self-center");
     taskContainer.classList.add("mt-5");
     form.classList.add("flex", "sm:w-96", "mt-5");
     inputBox.classList.add("border", "mr-5", "mt-5");
     submitButton.classList.add("ml-auto", "mt-5");
 
-    taskHeading.textContent = taskName;
+    projectHeading.textContent = projectName;
     submitButton.textContent = "Add";
 
+    projectHeading.setAttribute("id", "project-name");
     taskList.setAttribute("id", "list");
     form.setAttribute("id", "new-task-form");
     inputBox.setAttribute("id", "new-task-title");
@@ -55,7 +59,7 @@ function createTasks(taskName: string) {
     form.appendChild(submitButton);
     taskContainer.appendChild(taskList);
     taskContainer.appendChild(form);
-    tasks.appendChild(taskHeading);
+    tasks.appendChild(projectHeading);
     tasks.appendChild(taskContainer);
 
     return tasks;
@@ -161,15 +165,22 @@ function createEditTaskPopup(task: Task) {
     body.appendChild(popupContainer);
     body.appendChild(popup);
 
+    const projectName = document.querySelector("#project-name") as HTMLHeadingElement;
+    const tasks: Task[] = loadTasks(projectName.textContent ?? "");
+
     popupContainer.addEventListener("click", () => {
         body.removeChild(popupContainer);
         body.removeChild(popup);
+        createProject(projectName.textContent ?? "");
     });
 
     closeBtn.addEventListener("click", () => {
         body.removeChild(popupContainer);
         body.removeChild(popup);
+        createProject(projectName.textContent ?? "");
     });
+
+
 
     titleHeading.addEventListener("click", () => {
         editTitleHeading.textContent = "(click outside to change name)";
@@ -184,16 +195,23 @@ function createEditTaskPopup(task: Task) {
         inputElement.select();
 
         inputElement.addEventListener("blur", function () {
-            console.log(inputElement.value);
+            const foundTask = tasks.find(task => task.title === titleHeading.textContent);
+            if (foundTask) {
+                foundTask.title = inputElement.value;
+                saveTasks(tasks, projectName.textContent ?? "");
+            }
             titleHeading.textContent = inputElement.value;
             inputElement.replaceWith(titleHeading);
             editTitleHeading.textContent = "(click name to edit)";
+
+            
         });
     });
 
     doneBtn.addEventListener("click", () => {
         body.removeChild(popupContainer);
         body.removeChild(popup);
+        createProject(projectName.textContent ?? "");
     });
 }
     

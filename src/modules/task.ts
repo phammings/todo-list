@@ -138,17 +138,17 @@ function createEditTaskPopup(task: Task) {
     popup.classList.add("flex", "flex-col", "items-center", "absolute", "w-1/2", "h-3/4", "bg-white", "inset-0", "m-auto");
     titleContainer.classList.add("flex", "flex-col", "mx-auto", "mb-8");
     descContainer.classList.add("flex", "flex-col", "mx-auto", "mb-4");
-    dueDateContainer.classList.add("flex", "flex-col", "mx-auto", "mb-8");
+    dueDateContainer.classList.add("flex", "flex-col", "mx-auto", "mb-6");
     priorityContainer.classList.add("flex", "flex-row", "mx-auto", "mb-auto");
-    doneBtn.classList.add("flex", "flex-col", "mb-5", "bg-blue-500", "hover:bg-blue-700", "text-white", "font-bold", "py-2", "px-4", "border", "border-blue-700", "rounded");  
+    doneBtn.classList.add("flex", "flex-col", "mb-5", "bg-blue-500", "hover:bg-blue-700", "text-white", "font-bold", "py-0.5", "px-4", "border", "border-blue-700", "rounded");  
     closeBtn.classList.add("ml-auto", "mt-4", "mr-4");
     titleHeading.classList.add("text-xl");
     editTitleHeading.classList.add("mx-auto", "text-xs");
 
     titleHeading.classList.add("self-center");
-    descHeading.classList.add("mx-auto", "mb-4");
-    dueDateHeading.classList.add("mx-auto", "mb-4");
-    descBox.classList.add("ml-0", "appearance-none", "block", "w-full", "bg-gray-200", "text-gray-700", "border", "border-gray-200", "rounded", "py-3", "px-4", "mb-3", "leading-tight", "focus:outline-none", "focus:bg-white", "focus:border-gray-500");
+    descHeading.classList.add("mx-auto", "mb-2");
+    dueDateHeading.classList.add("mx-auto", "mb-2");
+    descBox.classList.add("ml-0", "appearance-none", "block", "w-full", "bg-gray-200", "text-gray-700", "border", "border-gray-200", "rounded", "py-2", "px-4", "mb-3", "leading-tight", "focus:outline-none", "focus:bg-white", "focus:border-gray-500");
     dueDate.classList.add("ml-0");
     priorityInput1.classList.add("ml-4");
     

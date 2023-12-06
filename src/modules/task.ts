@@ -37,8 +37,9 @@ function createTasks(taskName: string) {
 
     taskHeading.classList.add("text-lg", "font-bold", "self-center");
     taskContainer.classList.add("mt-5");
-    inputBox.classList.add("border");
-    submitButton.classList.add("mt-5");
+    form.classList.add("flex", "sm:w-96", "mt-5");
+    inputBox.classList.add("border", "mt-5");
+    submitButton.classList.add("ml-auto", "mt-5");
 
     taskHeading.textContent = taskName;
     submitButton.textContent = "Add";

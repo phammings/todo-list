@@ -119,7 +119,7 @@ function createEditTaskPopup(task: Task) {
     descHeading.textContent = "Description";
     dueDateHeading.textContent = "Due Date";
     priorityHeading.textContent = "Priority";
-    editTitleBtn.textContent = "...";
+    editTitleBtn.textContent = "(edit name)";
     closeBtn.textContent = "X";
     doneBtn.textContent = "Done";
 
@@ -131,13 +131,21 @@ function createEditTaskPopup(task: Task) {
 
     popupContainer.classList.add("fixed", "inset-0", "bg-black", "opacity-80");
     popup.classList.add("flex", "flex-col", "items-center", "absolute", "w-1/2", "h-1/2", "bg-white", "inset-0", "m-auto");
-    titleContainer.classList.add("flex", "flex-col", "mr-auto", "ml-4", "sm:flex-row");
-    descContainer.classList.add("flex", "flex-col", "mr-auto", "ml-4", "sm:flex-row");
-    dueDateContainer.classList.add("flex", "flex-col", "mr-auto", "ml-4", "sm:flex-row");
-    priorityContainer.classList.add("flex", "flex-col", "mr-auto", "ml-4", "sm:flex-row");
-    doneBtn.classList.add("flex", "flex-col", "sm:flex-row");  
-    closeBtn.classList.add("ml-auto", "my-4", "mr-4");
+    titleContainer.classList.add("flex", "flex-col", "mx-auto", "mb-8");
+    descContainer.classList.add("flex", "flex-col", "mx-auto", "mb-8");
+    dueDateContainer.classList.add("flex", "flex-col", "mx-auto", "mb-8");
+    priorityContainer.classList.add("flex", "flex-row", "mx-auto", "mb-auto");
+    doneBtn.classList.add("flex", "flex-col", "mb-5");  
+    closeBtn.classList.add("ml-auto", "mt-4", "mr-4");
+    titleHeading.classList.add("text-xl");
+    editTitleBtn.classList.add("text-xs");
 
+    titleHeading.classList.add("self-center");
+    descHeading.classList.add("mx-auto", "mb-4");
+    dueDateHeading.classList.add("mx-auto", "mb-4");
+    descBox.classList.add("ml-0");
+    dueDate.classList.add("ml-0");
+    priorityInput1.classList.add("ml-4");
     titleContainer.append(titleHeading, editTitleBtn);
     descContainer.append(descHeading, descBox);
     dueDateContainer.append(dueDateHeading, dueDate);

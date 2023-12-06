@@ -100,7 +100,7 @@ function createEditTaskPopup(task: Task) {
     const popupContainer = document.createElement("div") as HTMLDivElement;
     const popup = document.createElement("div") as HTMLDivElement;
     const closeBtn = document.createElement("button") as HTMLButtonElement;
-    const editTitleBtn = document.createElement("button") as HTMLButtonElement;
+    const editTitleBtn = document.createElement("p") as HTMLParagraphElement;
     const doneBtn = document.createElement("button") as HTMLButtonElement;
     const descBox = document.createElement("input") as HTMLInputElement;
     const dueDate = document.createElement("input") as HTMLInputElement;
@@ -120,7 +120,7 @@ function createEditTaskPopup(task: Task) {
     descHeading.textContent = "Description";
     dueDateHeading.textContent = "Due Date";
     priorityHeading.textContent = "Priority";
-    editTitleBtn.textContent = "(edit name)";
+    editTitleBtn.textContent = "(click name to edit)";
     closeBtn.textContent = "X";
     doneBtn.textContent = "Done";
 

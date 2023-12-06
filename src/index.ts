@@ -125,9 +125,7 @@ function createBtnContainer(project: string) {
     btnContainer.classList.add("hidden");
 
     projectList?.removeChild(btnContainer);
-    console.log(projectHeadings);
     projectHeadings = loadProjects();
-    console.log(projectHeadings);
   });
   return btnContainer;
 }

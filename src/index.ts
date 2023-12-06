@@ -113,7 +113,7 @@ function createBtnContainer(project: string) {
   const projectList = document.querySelector<HTMLDivElement>("#project-list");
 
   deleteProjectBtn.textContent = "X";
-  btnContainer.classList.add("flex", "flex-row", "group", "mx-20", "sm:mx-0");
+  btnContainer.classList.add("flex", "flex-row", "group", "mx-auto", "sm:mx-0");
   deleteProjectBtn.classList.add("ml-auto", "opacity-0", "group-hover:opacity-100");
 
   btnContainer.appendChild(projectHeading);

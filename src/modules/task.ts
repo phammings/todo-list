@@ -191,6 +191,10 @@ function createEditTaskPopup(task: Task) {
         });
     });
 
+    doneBtn.addEventListener("click", () => {
+        body.removeChild(popupContainer);
+        body.removeChild(popup);
+    });
 }
     
 export {Task, createTasks, createListItem, createCheckBox, createEditIcon, createDeleteIcon, createEditTaskPopup};

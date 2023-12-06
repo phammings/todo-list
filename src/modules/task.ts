@@ -180,8 +180,6 @@ function createEditTaskPopup(task: Task) {
         createProject(projectName.textContent ?? "");
     });
 
-
-
     titleHeading.addEventListener("click", () => {
         editTitleHeading.textContent = "(click outside to change name)";
 
@@ -194,7 +192,7 @@ function createEditTaskPopup(task: Task) {
         inputElement.focus();
         inputElement.select();
 
-        inputElement.addEventListener("blur", function () {
+        inputElement.addEventListener("blur", () => {
             const foundTask = tasks.find(task => task.title === titleHeading.textContent);
             if (foundTask) {
                 foundTask.title = inputElement.value;

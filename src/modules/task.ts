@@ -123,6 +123,10 @@ function createEditTaskPopup(task: Task) {
     closeBtn.textContent = "X";
     doneBtn.textContent = "Done";
 
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
+    dueDate.value = formattedDate;
+
     descBox.setAttribute("type", "text");
     dueDate.setAttribute("type", "date");
     priorityInput1.setAttribute("type", "radio");
@@ -132,7 +136,7 @@ function createEditTaskPopup(task: Task) {
     popupContainer.classList.add("fixed", "inset-0", "bg-black", "opacity-80");
     popup.classList.add("flex", "flex-col", "items-center", "absolute", "w-1/2", "h-1/2", "bg-white", "inset-0", "m-auto");
     titleContainer.classList.add("flex", "flex-col", "mx-auto", "mb-8");
-    descContainer.classList.add("flex", "flex-col", "mx-auto", "mb-8");
+    descContainer.classList.add("flex", "flex-col", "mx-auto", "mb-4");
     dueDateContainer.classList.add("flex", "flex-col", "mx-auto", "mb-8");
     priorityContainer.classList.add("flex", "flex-row", "mx-auto", "mb-auto");
     doneBtn.classList.add("flex", "flex-col", "mb-5");  
@@ -143,9 +147,10 @@ function createEditTaskPopup(task: Task) {
     titleHeading.classList.add("self-center");
     descHeading.classList.add("mx-auto", "mb-4");
     dueDateHeading.classList.add("mx-auto", "mb-4");
-    descBox.classList.add("ml-0");
+    descBox.classList.add("ml-0", "appearance-none", "block", "w-full", "bg-gray-200", "text-gray-700", "border", "border-gray-200", "rounded", "py-3", "px-4", "mb-3", "leading-tight", "focus:outline-none", "focus:bg-white", "focus:border-gray-500");
     dueDate.classList.add("ml-0");
     priorityInput1.classList.add("ml-4");
+    
     titleContainer.append(titleHeading, editTitleBtn);
     descContainer.append(descHeading, descBox);
     dueDateContainer.append(dueDateHeading, dueDate);

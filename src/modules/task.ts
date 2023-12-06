@@ -135,12 +135,12 @@ function createEditTaskPopup(task: Task) {
     priorityInput3.setAttribute("type", "radio");
 
     popupContainer.classList.add("fixed", "inset-0", "bg-black", "opacity-80");
-    popup.classList.add("flex", "flex-col", "items-center", "absolute", "w-1/2", "h-1/2", "bg-white", "inset-0", "m-auto");
+    popup.classList.add("flex", "flex-col", "items-center", "absolute", "w-1/2", "h-3/4", "bg-white", "inset-0", "m-auto");
     titleContainer.classList.add("flex", "flex-col", "mx-auto", "mb-8");
     descContainer.classList.add("flex", "flex-col", "mx-auto", "mb-4");
     dueDateContainer.classList.add("flex", "flex-col", "mx-auto", "mb-8");
     priorityContainer.classList.add("flex", "flex-row", "mx-auto", "mb-auto");
-    doneBtn.classList.add("flex", "flex-col", "mb-5");  
+    doneBtn.classList.add("flex", "flex-col", "mb-5", "bg-blue-500", "hover:bg-blue-700", "text-white", "font-bold", "py-2", "px-4", "border", "border-blue-700", "rounded");  
     closeBtn.classList.add("ml-auto", "mt-4", "mr-4");
     titleHeading.classList.add("text-xl");
     editTitleBtn.classList.add("text-xs");

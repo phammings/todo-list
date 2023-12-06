@@ -180,6 +180,19 @@ function createEditTaskPopup(task: Task) {
         createProject(projectName.textContent ?? "");
     });
 
+    descBox.addEventListener("click", () => {
+        descBox.focus();
+        descBox.select();
+        
+        descBox.addEventListener("blur", () => {
+            const foundTask = tasks.find(task => task.title === titleHeading.textContent);
+            if (foundTask) {
+                foundTask.desc = descBox.textContent ?? "";
+                saveTasks(tasks, projectName.textContent ?? "");
+            }
+        });
+    });
+
     titleHeading.addEventListener("click", () => {
         editTitleHeading.textContent = "(click outside to change name)";
 

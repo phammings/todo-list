@@ -26,6 +26,9 @@ function displayTasks(projectName: string) {
       );
     tasks.push(newTask);
     saveTasks(tasks, projectName);
+    if (projectName !== "All Tasks") {
+      saveTasks(tasks, "All Tasks");
+    }
   
     addListItem(newTask);
     input.value = "";

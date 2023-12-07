@@ -5,15 +5,11 @@ function saveTasks(tasks: Task[], projectName: string) {
 }
   
 function loadTasks(projectName: string): Task[] {
-    const allProjectNames = getAllProjectNames();
-    if (projectName == "All Tasks") {
-        return loadAllTasks(allProjectNames);
-    }
-    else if (projectName == "Today's Tasks") {
-        return loadTodaysTasks(allProjectNames);
+    if (projectName == "Today's Tasks") {
+        return loadTodaysTasks();
     }
     else if (projectName == "This Week's Tasks") {
-        return loadThisWeeksTasks(allProjectNames);
+        return loadWeeksTasks();
     }
     const taskJSON = localStorage.getItem(projectName);
     if (taskJSON == null) return [];
@@ -21,9 +17,13 @@ function loadTasks(projectName: string): Task[] {
 }
 
 function deleteTask(projectName: string, taskName: Task) {
-    let tasks: Task[] = loadTasks(projectName);
-    tasks = tasks.filter((task) => task.title !== taskName.title)
-    saveTasks(tasks, projectName);
+    const allProjectNames = getAllProjectNames();
+    allProjectNames.forEach(project => {
+        let tasks: Task[] = loadTasks(project);
+        tasks = tasks.filter((task) => task.title !== taskName.title);
+        saveTasks(tasks, project);
+    });
+    
 }
 
 function saveProject(projects: string[]) {
@@ -42,45 +42,32 @@ function deleteProject(projectName: string) {
     saveProject(projects);
 }
 
-function loadAllTasks(projectNames: string[]): Task[] {
-    const allTasks: Task[] = [];
-
-    projectNames.forEach(projectName => {
-        const taskJSON = localStorage.getItem(projectName);
-        if (taskJSON != null) {
-            const tasks = JSON.parse(taskJSON) as Task[];
-            allTasks.push(...tasks);
-        }
-    });
-
-    return allTasks;
-}
-
-function loadTodaysTasks(projectNames: string[]): Task[] {
+function loadTodaysTasks(): Task[] {
+    const projectName = "All Tasks";
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
 
     const todayTasks: Task[] = [];
 
-    projectNames.forEach(projectName => {
-        const taskJSON = localStorage.getItem(projectName);
+    const taskJSON = localStorage.getItem(projectName);
 
-        if (taskJSON != null) {
-            const tasks = JSON.parse(taskJSON) as Task[];
-            const tasksToday = tasks.filter(task => {
-                const taskDueDate = new Date(task.dueDate);
-                taskDueDate.setUTCHours(0, 0, 0, 0);
-                return taskDueDate.getTime() === today.getTime();
-            });
+    if (taskJSON != null) {
+        const tasks = JSON.parse(taskJSON) as Task[];
+        const tasksToday = tasks.filter(task => {
+            const taskDueDate = new Date(task.dueDate);
+            taskDueDate.setUTCHours(0, 0, 0, 0);
+            return taskDueDate.getTime() === today.getTime();
+        });
 
-            todayTasks.push(...tasksToday);
-        }
-    });
+        todayTasks.push(...tasksToday);
+    }
 
     return todayTasks;
 }
 
-function loadThisWeeksTasks(projectNames: string[]): Task[] {
+
+function loadWeeksTasks(): Task[] {
+    const projectName = "All Tasks";
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0);
 
@@ -89,23 +76,22 @@ function loadThisWeeksTasks(projectNames: string[]): Task[] {
 
     const thisWeekTasks: Task[] = [];
 
-    projectNames.forEach(projectName => {
-        const taskJSON = localStorage.getItem(projectName);
+    const taskJSON = localStorage.getItem(projectName);
 
-        if (taskJSON != null) {
-            const tasks = JSON.parse(taskJSON) as Task[];
-            const tasksThisWeek = tasks.filter(task => {
-                const taskDueDate = new Date(task.dueDate);
-                taskDueDate.setUTCHours(0, 0, 0, 0);
-                return taskDueDate >= today && taskDueDate <= endOfWeek;
-            });
+    if (taskJSON != null) {
+        const tasks = JSON.parse(taskJSON) as Task[];
+        const tasksThisWeek = tasks.filter(task => {
+            const taskDueDate = new Date(task.dueDate);
+            taskDueDate.setUTCHours(0, 0, 0, 0);
+            return taskDueDate >= today && taskDueDate <= endOfWeek;
+        });
 
-            thisWeekTasks.push(...tasksThisWeek);
-        }
-    });
+        thisWeekTasks.push(...tasksThisWeek);
+    }
 
     return thisWeekTasks;
 }
+
 
 function getAllProjectNames(): string[] {
     const allProjectNames = Object.keys(localStorage);

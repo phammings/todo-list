@@ -107,6 +107,7 @@ function createProjectPopup() {
 }
 
 function createBtnContainer(project: string) {
+  const allTasksBtn = document.querySelector<HTMLButtonElement>("#homepage");
   const btnContainer = document.createElement("div") as HTMLDivElement;
   const deleteProjectBtn = document.createElement("button") as HTMLButtonElement;
   const projectHeading = createProjectHeading(project);
@@ -126,6 +127,8 @@ function createBtnContainer(project: string) {
 
     projectList?.removeChild(btnContainer);
     projectHeadings = loadProjects();
+    allTasksBtn?.classList.remove("active");
+    allTasksBtn?.click();
   });
   return btnContainer;
 }
@@ -164,6 +167,7 @@ function createMain() {
   tasks.classList.add("flex", "flex-col", "p-5", "items-center");
   dummyDiv.classList.add("invisible");
 
+  allTasksBtn.setAttribute("id", "homepage");
   tasks.setAttribute("id", "tasks");
   projects.setAttribute("id", "projects");
   projectButton.setAttribute("id", "project-btn");

@@ -39,7 +39,13 @@ function loadProjects(): string[] {
 function deleteProject(projectName: string) {
     let projects = loadProjects();
     projects = projects.filter(project => project !== projectName);
+    let tasks: Task[] = loadTasks(projectName);
+    tasks.forEach(task => {
+        deleteTask("All Tasks", task);
+    });
+    localStorage.removeItem(projectName);
     saveProject(projects);
+    
 }
 
 function loadTodaysTasks(): Task[] {

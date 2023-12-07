@@ -130,7 +130,8 @@ function createEditTaskPopup(task: Task) {
     doneBtn.textContent = "Done";
 
     const dateSaved = new Date(task.dueDate);
-    dueDate.value = `${dateSaved.getFullYear()}-${(dateSaved.getMonth() + 1).toString().padStart(2, '0')}-${dateSaved.getDate().toString().padStart(2, '0')}`;
+    dueDate.value = `${dateSaved.getUTCFullYear()}-${(dateSaved.getUTCMonth() + 1).toString().padStart(2, '0')}-${dateSaved.getUTCDate().toString().padStart(2, '0')}`;
+
 
     descBox.setAttribute("type", "text");
     dueDate.setAttribute("type", "date");
@@ -201,8 +202,6 @@ function createEditTaskPopup(task: Task) {
             const foundTask = tasks.find(task => task.title === titleHeading.textContent);
             if (foundTask && dueDate.valueAsDate != null) {
                 const modifiedDueDate = new Date(dueDate.valueAsDate);
-                modifiedDueDate.setDate(modifiedDueDate.getDate() + 1);
-
                 foundTask.dueDate = modifiedDueDate;
                 saveTasks(tasks, projectName.textContent ?? "");
             }

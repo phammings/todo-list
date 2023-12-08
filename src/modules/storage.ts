@@ -1,7 +1,12 @@
 import {Task} from "src/modules/task";
 
 function saveTasks(tasks: Task[], projectName: string) {
-    localStorage.setItem(projectName, JSON.stringify(tasks));
+    if (projectName == "All Tasks" || projectName == "Today's Tasks" || projectName == "This Week's Tasks") {
+        localStorage.setItem("All Tasks", JSON.stringify(tasks));
+    }
+    else {
+        localStorage.setItem(projectName, JSON.stringify(tasks));
+    }
 }
   
 function loadTasks(projectName: string): Task[] {
@@ -11,9 +16,11 @@ function loadTasks(projectName: string): Task[] {
     else if (projectName == "This Week's Tasks") {
         return loadWeeksTasks();
     }
-    const taskJSON = localStorage.getItem(projectName);
-    if (taskJSON == null) return [];
-    return JSON.parse(taskJSON);
+    else {
+        const taskJSON = localStorage.getItem(projectName);
+        if (taskJSON == null) return [];
+        return JSON.parse(taskJSON);
+    }
 }
 
 function deleteTask(projectName: string, taskName: Task) {

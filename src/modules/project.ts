@@ -6,6 +6,7 @@ function displayTasks(projectName: string) {
   const form = document.querySelector<HTMLFormElement>("#new-task-form");
   const input = document.querySelector<HTMLInputElement>("#new-task-title");
   const tasks: Task[] = loadTasks(projectName);
+  const allTasks: Task[] = loadTasks("All Tasks");
   tasks.forEach(task => {
     addListItem(task);
   });
@@ -27,7 +28,8 @@ function displayTasks(projectName: string) {
     tasks.push(newTask);
     saveTasks(tasks, projectName);
     if (projectName !== "All Tasks") {
-      saveTasks(tasks, "All Tasks");
+      allTasks.push(newTask);
+      saveTasks(allTasks, "All Tasks");
     }
   
     addListItem(newTask);

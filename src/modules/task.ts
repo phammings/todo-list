@@ -8,7 +8,6 @@ class Task {
     createdAt: Date;
     isComplete: boolean;
     priority: string;
-    note: string;
 
     constructor(
         title: string,
@@ -17,7 +16,6 @@ class Task {
         createdAt: Date,
         isComplete: boolean,
         priority: string,
-        note: string
     ) {
         this.title = title;
         this.desc = desc;
@@ -25,7 +23,6 @@ class Task {
         this.createdAt = createdAt;
         this.isComplete = isComplete;
         this.priority = priority;
-        this.note = note;
     }
 }
 

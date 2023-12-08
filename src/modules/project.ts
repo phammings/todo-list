@@ -22,8 +22,7 @@ function displayTasks(projectName: string) {
       new Date(),
       new Date(),
       false,
-      "Priority",
-      "Notes"
+      "Priority"
       );
     tasks.push(newTask);
     saveTasks(tasks, projectName);

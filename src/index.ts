@@ -147,12 +147,14 @@ function createMain() {
   const tasks = document.createElement("div") as HTMLDivElement;
   const dummyDiv = document.createElement("div") as HTMLDivElement;
   const menuBtn = document.getElementById("menu-btn") as HTMLButtonElement;
+  const logoutBtn = document.createElement("button") as HTMLButtonElement;
 
   projectHeading.textContent = "Projects";
   allTasksBtn.textContent = "All Tasks";
   todaysTasksBtn.textContent = "Today";
   weeksTasksBtn.textContent = "This Week";
   projectButton.textContent = "Add Project";
+  logoutBtn.textContent = "Logout";
 
   main.classList.add("flex", "flex-col", "justify-between", "min-h-[calc(100vh-88px)]", "sm:flex-row");
   nav.classList.add("p-5", "bg-blue-200", "sm:w-64");
@@ -166,12 +168,14 @@ function createMain() {
   projectButton.classList.add("group-hover:bg-blue-300", "m-2", "p-1", "sm:text-left");
   tasks.classList.add("flex", "flex-col", "p-5", "items-center");
   dummyDiv.classList.add("invisible");
+  logoutBtn.classList.add("bg-blue-500", "hover:bg-blue-300", "text-white", "font-bold", "mt-2");
 
   allTasksBtn.setAttribute("id", "homepage");
   tasks.setAttribute("id", "tasks");
   projects.setAttribute("id", "projects");
   projectButton.setAttribute("id", "project-btn");
   projectList.setAttribute("id", "project-list");
+  logoutBtn.setAttribute("id", "logout-btn");
 
   const allProjects: string[] = loadProjects();
   allProjects.forEach(project => {
@@ -184,6 +188,7 @@ function createMain() {
   projects.appendChild(projectHeading);
   projects.appendChild(projectList);
   projects.appendChild(projectButton);
+  projects.appendChild(logoutBtn);
   nav.appendChild(defaultProjects);
   nav.appendChild(projects);
 
@@ -227,6 +232,11 @@ function createMain() {
     createProjectPopup();
   });
 
+  logoutBtn.classList.add("button-nav");
+  logoutBtn?.addEventListener("click", (e) => {
+    location.reload();
+  });
+
   return main;
 }
 
@@ -255,5 +265,35 @@ function initializeWebsite() {
   createProject("All Tasks");
 }
 
+function intializeLogin() {
+  const guestSignIn = document.querySelector<HTMLAnchorElement>("#guest-signin");
+  const guestSignIn2 = document.querySelector<HTMLAnchorElement>("#guest-signin2");
+  const signUp = document.querySelector<HTMLAnchorElement>("#sign-up");
+  const signIn = document.querySelector<HTMLAnchorElement>("#sign-in");
+  const registerPage = document.querySelector<HTMLBodyElement>("#register-page");
+  const loginPage = document.querySelector<HTMLBodyElement>("#login-page");
+  
+  signUp?.addEventListener("click", () => {
+    loginPage?.classList.add("hidden");
+    registerPage?.classList.remove("hidden");
+  });
+
+  signIn?.addEventListener("click", () => {
+    loginPage?.classList.remove("hidden");
+    registerPage?.classList.add("hidden");
+  });
+
+  guestSignIn?.addEventListener("click", () => {
+    loginPage?.classList.add("hidden");
+    initializeWebsite();
+  });
+
+  guestSignIn2?.addEventListener("click", () => {
+    registerPage?.classList.add("hidden");
+    initializeWebsite();
+  });
+
+}
+
 let projectHeadings: string[] = loadProjects();
-initializeWebsite();
+intializeLogin();

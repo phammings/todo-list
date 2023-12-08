@@ -83,23 +83,20 @@ function createDeleteIcon() {
     return deleteIcon;
 }
 
-function isDueToday(date: Date) {
+function isTodayOrPast(date: Date) {
     const today = new Date();
-    return (
-      date.getDate() === today.getDate() &&
-      date.getMonth() === today.getMonth() &&
-      date.getFullYear() === today.getFullYear()
-    );
-  }
+    const dateString = (new Date(date)).toISOString().slice(0, 10);
+    const todayString = (new Date(today)).toISOString().slice(0, 10);
+  
+    return dateString <= todayString;
+}
 
 function createListItem(task: Task, checkbox: HTMLInputElement, editIcon: HTMLButtonElement, deleteIcon: HTMLButtonElement) {
     const item = document.createElement("li");
     const label = document.createElement("label");
-    
-    if (isDueToday(task.dueDate)) {
+    if (isTodayOrPast(task.dueDate)) {
         item.classList.add("bg-red-500");
     }
-
     checkbox.checked = task.isComplete;
     item.classList.add("flex", "sm:w-96");
     

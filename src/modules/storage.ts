@@ -6,7 +6,25 @@ function saveTasks(tasks: Task[], projectName: string) {
     }
     else {
         localStorage.setItem(projectName, JSON.stringify(tasks));
+        updateTaskValues(projectName);
     }
+}
+
+function updateTaskValues(projectName: string) {
+    const allTasks = loadTasks("All Tasks");
+    const projectTasks = loadTasks(projectName);
+    allTasks.forEach(task => {
+        projectTasks.forEach(projectTask => {
+            if (task.createdAt == projectTask.createdAt) {
+                task.desc = projectTask.desc;
+                task.dueDate = projectTask.dueDate;
+                task.isComplete = projectTask.isComplete;
+                task.title = projectTask.title;
+            }
+        });
+    });
+    console.log(allTasks);
+    localStorage.setItem("All Tasks", JSON.stringify(allTasks));
 }
   
 function loadTasks(projectName: string): Task[] {

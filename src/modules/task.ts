@@ -108,6 +108,9 @@ function createEditTaskPopup(task: Task) {
     const priorityInput1 = document.createElement("input") as HTMLInputElement;
     const priorityInput2 = document.createElement("input") as HTMLInputElement;
     const priorityInput3 = document.createElement("input") as HTMLInputElement;
+    const label1 = document.createElement("p") as HTMLParagraphElement;
+    const label2 = document.createElement("p") as HTMLParagraphElement;
+    const label3 = document.createElement("p") as HTMLParagraphElement;
     const titleHeading = document.createElement("h1") as HTMLHeadingElement;
     const descHeading = document.createElement("h2") as HTMLHeadingElement;
     const dueDateHeading = document.createElement("h2") as HTMLHeadingElement;
@@ -121,10 +124,17 @@ function createEditTaskPopup(task: Task) {
     descHeading.textContent = "Description";
     descBox.value = task.desc;
     dueDateHeading.textContent = "Due Date";
-    priorityHeading.textContent = "Priority";
+    priorityHeading.textContent = "Priority:";
     editTitleHeading.textContent = "(click name to edit)";
     closeBtn.textContent = "X";
     doneBtn.textContent = "Done";
+    priorityInput1.checked = true;
+    priorityInput1.textContent = "!";
+    priorityInput2.textContent = "!!";
+    priorityInput3.textContent = "!!!";
+    label1.textContent = "!";
+    label2.textContent = "!!";
+    label3.textContent = "!!!";
 
     const dateSaved = new Date(task.dueDate);
     dueDate.value = `${dateSaved.getUTCFullYear()}-${(dateSaved.getUTCMonth() + 1).toString().padStart(2, '0')}-${dateSaved.getUTCDate().toString().padStart(2, '0')}`;
@@ -135,6 +145,9 @@ function createEditTaskPopup(task: Task) {
     priorityInput1.setAttribute("type", "radio");
     priorityInput2.setAttribute("type", "radio");
     priorityInput3.setAttribute("type", "radio");
+    priorityInput1.setAttribute("name", "buttonGroup");
+    priorityInput2.setAttribute("name", "buttonGroup");
+    priorityInput3.setAttribute("name", "buttonGroup");
 
     popupContainer.classList.add("fixed", "inset-0", "bg-black", "opacity-80");
     popup.classList.add("flex", "flex-col", "items-center", "absolute", "w-1/2", "h-3/4", "bg-white", "inset-0", "m-auto");
@@ -146,18 +159,22 @@ function createEditTaskPopup(task: Task) {
     closeBtn.classList.add("ml-auto", "mt-4", "mr-4");
     titleHeading.classList.add("text-xl");
     editTitleHeading.classList.add("mx-auto", "text-xs");
-
+    priorityInput1.classList.add("priorityBtn", "mx-1");
+    priorityInput2.classList.add("priorityBtn", "mx-1");
+    priorityInput3.classList.add("priorityBtn", "mx-1");
     titleHeading.classList.add("self-center");
     descHeading.classList.add("mx-auto", "mb-2");
     dueDateHeading.classList.add("mx-auto", "mb-2");
     descBox.classList.add("ml-0", "appearance-none", "block", "w-full", "bg-gray-200", "text-gray-700", "border", "border-gray-200", "rounded", "py-2", "px-4", "mb-3", "leading-tight", "focus:outline-none", "focus:bg-white", "focus:border-gray-500");
     dueDate.classList.add("ml-0");
     priorityInput1.classList.add("ml-4");
+    label1.classList.add("mr-4");
+    label2.classList.add("mr-4");
     
     titleContainer.append(titleHeading, editTitleHeading);
     descContainer.append(descHeading, descBox);
     dueDateContainer.append(dueDateHeading, dueDate);
-    priorityContainer.append(priorityHeading, priorityInput1, priorityInput2, priorityInput3);
+    priorityContainer.append(priorityHeading, priorityInput1, label1, priorityInput2, label2, priorityInput3, label3);
 
     popup.append(closeBtn, titleContainer, descContainer, dueDateContainer, priorityContainer, doneBtn);
     body.appendChild(popupContainer);
@@ -165,6 +182,7 @@ function createEditTaskPopup(task: Task) {
 
     const projectName = document.querySelector("#project-name") as HTMLHeadingElement;
     const tasks: Task[] = loadTasks(projectName.textContent ?? "");
+    const buttons = document.querySelectorAll(".priorityBtn");
 
     popupContainer.addEventListener("click", () => {
         body.removeChild(popupContainer);
@@ -228,6 +246,16 @@ function createEditTaskPopup(task: Task) {
             editTitleHeading.textContent = "(click name to edit)";
 
             
+        });
+    });
+
+    buttons.forEach(button => {
+        button.addEventListener("change", () => {
+            const foundTask = tasks.find(task => task.title === titleHeading.textContent);
+            if (foundTask) {
+                foundTask.priority = button.textContent ?? "";
+                saveTasks(tasks, projectName.textContent ?? "");
+            }
         });
     });
 

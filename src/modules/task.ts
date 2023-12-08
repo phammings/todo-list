@@ -90,7 +90,7 @@ function createListItem(task: Task, checkbox: HTMLInputElement, editIcon: HTMLBu
     checkbox.checked = task.isComplete;
     item.classList.add("flex", "sm:w-96");
     
-    label.append(checkbox, task.title);
+    label.append(checkbox, task.title + task.priority);
     item.append(label, editIcon, deleteIcon);
 
     return item;
@@ -119,6 +119,7 @@ function createEditTaskPopup(task: Task) {
     const descContainer = document.createElement("div") as HTMLDivElement;
     const dueDateContainer = document.createElement("div") as HTMLDivElement;
     const priorityContainer = document.createElement("div") as HTMLDivElement;
+    const priorityLevel: string = task.priority;
 
     titleHeading.textContent = task.title;
     descHeading.textContent = "Description";
@@ -128,13 +129,27 @@ function createEditTaskPopup(task: Task) {
     editTitleHeading.textContent = "(click name to edit)";
     closeBtn.textContent = "X";
     doneBtn.textContent = "Done";
-    priorityInput1.checked = true;
     priorityInput1.textContent = "!";
     priorityInput2.textContent = "!!";
     priorityInput3.textContent = "!!!";
     label1.textContent = "!";
     label2.textContent = "!!";
     label3.textContent = "!!!";
+    if (priorityLevel == "!") {
+        priorityInput1.checked = true;
+        priorityInput2.checked = false;
+        priorityInput3.checked = false;
+    }
+    if (priorityLevel == "!!") {
+        priorityInput1.checked = false;
+        priorityInput2.checked = true;
+        priorityInput3.checked = false;
+    }
+    if (priorityLevel == "!!!") {
+        priorityInput1.checked = false;
+        priorityInput2.checked = false;
+        priorityInput3.checked = true;
+    }
 
     const dateSaved = new Date(task.dueDate);
     dueDate.value = `${dateSaved.getUTCFullYear()}-${(dateSaved.getUTCMonth() + 1).toString().padStart(2, '0')}-${dateSaved.getUTCDate().toString().padStart(2, '0')}`;

@@ -95,10 +95,18 @@ function createListItem(task: Task, checkbox: HTMLInputElement, editIcon: HTMLBu
     const item = document.createElement("li");
     const label = document.createElement("label");
     if (isTodayOrPast(task.dueDate)) {
-        item.classList.add("bg-red-500");
+        item.classList.add("bg-red-300");
     }
+    else {
+        item.classList.remove("bg-red-300");
+    }
+    if (task.isComplete){
+        item.classList.remove("bg-red-300");
+    }
+    
+
     checkbox.checked = task.isComplete;
-    item.classList.add("flex", "sm:w-96");
+    item.classList.add("flex", "px-2", "sm:w-96");
     
     label.append(checkbox, task.title + task.priority);
     item.append(label, editIcon, deleteIcon);

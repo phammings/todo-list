@@ -35,6 +35,14 @@ function displayTasks(projectName: string) {
     input.value = "";
   });
 
+  function isTodayOrPast(date: Date) {
+    const today = new Date();
+    const dateString = (new Date(date)).toISOString().slice(0, 10);
+    const todayString = (new Date(today)).toISOString().slice(0, 10);
+  
+    return dateString <= todayString;
+}
+
   function addListItem(task: Task) {
     const checkbox = createCheckBox();
     const editIcon = createEditIcon();
@@ -42,6 +50,15 @@ function displayTasks(projectName: string) {
 
     checkbox.addEventListener("change", () => {
       task.isComplete = checkbox.checked;
+      if (isTodayOrPast(task.dueDate) && !task.isComplete) {
+        item.classList.add("bg-red-300");
+      }
+      else if (isTodayOrPast(task.dueDate) && task.isComplete) {
+        item.classList.remove("bg-red-300");
+      }
+      else {
+        item.classList.remove("bg-red-300");
+      }
       saveTasks(tasks, projectName);
     });
 

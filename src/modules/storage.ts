@@ -23,6 +23,7 @@ function updateProjectValues() {
                     projectTask.dueDate = task.dueDate;
                     projectTask.isComplete = task.isComplete;
                     projectTask.title = task.title;
+                    projectTask.priority = task.priority;
                 }
             });
         });
@@ -40,6 +41,7 @@ function updateTaskValues(projectName: string) {
                 task.dueDate = projectTask.dueDate;
                 task.isComplete = projectTask.isComplete;
                 task.title = projectTask.title;
+                task.priority = projectTask.priority;
             }
         });
     });

@@ -3,11 +3,31 @@ import {Task} from "src/modules/task";
 function saveTasks(tasks: Task[], projectName: string) {
     if (projectName == "All Tasks" || projectName == "Today's Tasks" || projectName == "This Week's Tasks") {
         localStorage.setItem("All Tasks", JSON.stringify(tasks));
+        updateProjectValues();
     }
     else {
         localStorage.setItem(projectName, JSON.stringify(tasks));
         updateTaskValues(projectName);
     }
+}
+
+function updateProjectValues() {
+    const allTasks = loadTasks("All Tasks");
+    const allProjectNames = getAllProjectNames();
+    allProjectNames.forEach(project => {
+        const tasks = loadTasks(project);
+        tasks.forEach(projectTask => {
+            allTasks.forEach(task => {
+                if (projectTask.createdAt == task.createdAt) {
+                    projectTask.desc = task.desc;
+                    projectTask.dueDate = task.dueDate;
+                    projectTask.isComplete = task.isComplete;
+                    projectTask.title = task.title;
+                }
+            });
+        });
+        localStorage.setItem(project, JSON.stringify(tasks));
+    }); 
 }
 
 function updateTaskValues(projectName: string) {

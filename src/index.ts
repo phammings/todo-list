@@ -25,8 +25,8 @@ function createHeader() {
   header?.classList.add("flex", "flex-wrap", "justify-between", "p-3", "bg-blue-600");
   pageName?.classList.add("text-white", "font-bold");
   button?.classList.add("space-y-q", "sm:hidden");
-  hamburgerIcon1?.classList.add("w-8", "h-1", "bg-white");
-  hamburgerIcon2?.classList.add("w-8", "h-1", "bg-white");
+  hamburgerIcon1?.classList.add("w-8", "h-1", "bg-white", "mb-1");
+  hamburgerIcon2?.classList.add("w-8", "h-1", "bg-white", "mb-1");
   hamburgerIcon3?.classList.add("w-8", "h-1", "bg-white");
 
   button.setAttribute("id", "menu-btn");

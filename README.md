@@ -47,6 +47,7 @@ The project involves creating a todo list application with dynamic todo items, p
 * [![Typescript][Typescript.ts]][Typescript-url]
 * [![HTML][HTML.html]][HTML-url]
 * [![TailwindCSS][CSS.css]][CSS-url]
+* [![FireBase][Firebase]][Firebase-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -59,6 +60,7 @@ The project involves creating a todo list application with dynamic todo items, p
 - ✔️ Utilizing TypeScript for strong typing and enhanced code organization
 - ✔️ Utilizing the TailwindCSS framework to design a responsive website for mobile and larger screens
 - ✔️ Utilizing the Web Storage API, specifically localStorage, for data persistence with JSON
+- ✔️ Developed secure email authentication login system using Firebase for a simple backend integration
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -73,3 +75,5 @@ The project involves creating a todo list application with dynamic todo items, p
 [CSS-url]: https://tailwindcss.com/ 
 [HTML.HTML]: https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white
 [HTML-url]: https://developer.mozilla.org/en-US/docs/Web/HTML
+[Firebase]: https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white
+[Firebase-url]: https://firebase.google.com/

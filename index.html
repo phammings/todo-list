@@ -108,11 +108,22 @@
       const loginBtn = document.querySelector("#login-btn");
       const registerBtn = document.querySelector("#register-btn");
       const div1 = document.querySelector("#btn-container1");
-      const div2 = document.querySelector("#btn-container2");
+      const div2 = document.querySelector("#btn-container2");                                      
+      document.querySelector("#register-page).onkeypress = function(e) {
+        let key = e.charCode || e.keyCode || 0;     
+        if (key == 13) {
+          e.preventDefault();
+        }
+      }
+      document.querySelector("#login-page).onkeypress = function(e) {
+        let key = e.charCode || e.keyCode || 0;     
+        if (key == 13) {
+          e.preventDefault();
+        }
+      }
       
       div1.append(loginBtn);
       div2.append(registerBtn);
-
     </script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>

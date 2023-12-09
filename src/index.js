@@ -122,11 +122,13 @@ function createMain() {
     const tasks = document.createElement("div");
     const dummyDiv = document.createElement("div");
     const menuBtn = document.getElementById("menu-btn");
+    const logoutBtn = document.createElement("button");
     projectHeading.textContent = "Projects";
     allTasksBtn.textContent = "All Tasks";
     todaysTasksBtn.textContent = "Today";
     weeksTasksBtn.textContent = "This Week";
     projectButton.textContent = "Add Project";
+    logoutBtn.textContent = "Logout";
     main.classList.add("flex", "flex-col", "justify-between", "min-h-[calc(100vh-88px)]", "sm:flex-row");
     nav.classList.add("p-5", "bg-blue-200", "sm:w-64");
     defaultProjects.classList.add("flex", "flex-col");
@@ -139,11 +141,13 @@ function createMain() {
     projectButton.classList.add("group-hover:bg-blue-300", "m-2", "p-1", "sm:text-left");
     tasks.classList.add("flex", "flex-col", "p-5", "items-center");
     dummyDiv.classList.add("invisible");
+    logoutBtn.classList.add("bg-blue-500", "hover:bg-blue-300", "text-white", "font-bold", "mt-2");
     allTasksBtn.setAttribute("id", "homepage");
     tasks.setAttribute("id", "tasks");
     projects.setAttribute("id", "projects");
     projectButton.setAttribute("id", "project-btn");
     projectList.setAttribute("id", "project-list");
+    logoutBtn.setAttribute("id", "logout-btn");
     const allProjects = loadProjects();
     allProjects.forEach(project => {
         const btnContainer = createBtnContainer(project);
@@ -155,6 +159,7 @@ function createMain() {
     projects.appendChild(projectHeading);
     projects.appendChild(projectList);
     projects.appendChild(projectButton);
+    projects.appendChild(logoutBtn);
     nav.appendChild(defaultProjects);
     nav.appendChild(projects);
     main.appendChild(nav);
@@ -191,6 +196,10 @@ function createMain() {
     projectButton === null || projectButton === void 0 ? void 0 : projectButton.addEventListener("click", (e) => {
         createProjectPopup();
     });
+    logoutBtn.classList.add("button-nav");
+    logoutBtn === null || logoutBtn === void 0 ? void 0 : logoutBtn.addEventListener("click", (e) => {
+        location.reload();
+    });
     return main;
 }
 function createFooter() {
@@ -212,5 +221,37 @@ function initializeWebsite() {
     //  Default Homepage
     createProject("All Tasks");
 }
+function intializeLogin() {
+    const guestSignIn = document.querySelector("#guest-signin");
+    const guestSignIn2 = document.querySelector("#guest-signin2");
+    const signUp = document.querySelector("#sign-up");
+    const signIn = document.querySelector("#sign-in");
+    const registerPage = document.querySelector("#register-page");
+    const loginPage = document.querySelector("#login-page");
+    signUp === null || signUp === void 0 ? void 0 : signUp.addEventListener("click", () => {
+        loginPage === null || loginPage === void 0 ? void 0 : loginPage.classList.add("hidden");
+        registerPage === null || registerPage === void 0 ? void 0 : registerPage.classList.remove("hidden");
+    });
+    signIn === null || signIn === void 0 ? void 0 : signIn.addEventListener("click", () => {
+        loginPage === null || loginPage === void 0 ? void 0 : loginPage.classList.remove("hidden");
+        registerPage === null || registerPage === void 0 ? void 0 : registerPage.classList.add("hidden");
+    });
+    guestSignIn === null || guestSignIn === void 0 ? void 0 : guestSignIn.addEventListener("click", () => {
+        loginPage === null || loginPage === void 0 ? void 0 : loginPage.classList.remove("hidden");
+        initializeWebsite();
+    });
+    guestSignIn2 === null || guestSignIn2 === void 0 ? void 0 : guestSignIn2.addEventListener("click", () => {
+        registerPage === null || registerPage === void 0 ? void 0 : registerPage.classList.remove("hidden");
+        initializeWebsite();
+    });
+}
+const myWindow = window;
+myWindow.myFunction = function () {
+    const registerPage = document.querySelector("#register-page");
+    const loginPage = document.querySelector("#login-page");
+    loginPage === null || loginPage === void 0 ? void 0 : loginPage.classList.add("hidden");
+    registerPage === null || registerPage === void 0 ? void 0 : registerPage.classList.add("hidden");
+    initializeWebsite();
+};
 let projectHeadings = loadProjects();
-initializeWebsite();
+intializeLogin();

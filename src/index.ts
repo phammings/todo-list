@@ -284,16 +284,33 @@ function intializeLogin() {
   });
 
   guestSignIn?.addEventListener("click", () => {
-    loginPage?.classList.add("hidden");
+    loginPage?.classList.remove("hidden");
     initializeWebsite();
   });
 
   guestSignIn2?.addEventListener("click", () => {
-    registerPage?.classList.add("hidden");
+    registerPage?.classList.remove("hidden");
     initializeWebsite();
   });
 
 }
+
+
+interface CustomWindow extends Window {
+  myFunction?: () => void;
+}
+
+const myWindow = window as CustomWindow;
+
+myWindow.myFunction = function() {
+  const registerPage = document.querySelector<HTMLBodyElement>("#register-page");
+  const loginPage = document.querySelector<HTMLBodyElement>("#login-page");
+
+  loginPage?.classList.add("hidden");
+  registerPage?.classList.add("hidden");
+  
+  initializeWebsite();
+};
 
 let projectHeadings: string[] = loadProjects();
 intializeLogin();

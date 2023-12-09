@@ -64,10 +64,10 @@ The project involves creating a todo list application with dynamic todo items, p
 
 <!-- SCREENSHOTS -->
 ## Screenshots
-<img src="/images/Screenshot2.png" width="600">
+<img src="/images/Screenshot2.PNG" width="600">
 <img src="/images/Screenshot2-5.png" height="300">
 <img src="/images/Screenshot1.png" width="600">
-<img src="/images/Screenshot3.png" width="600">
+<img src="/images/Screenshot3.PNG" width="600">
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->

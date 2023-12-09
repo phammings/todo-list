@@ -33,7 +33,8 @@ Task Management website implemented for <a href="https://www.theodinproject.com/
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<img src="/images/Screenshot.png" width="600">
+<img src="/images/Screenshot_2023-12-07_23-54-01.png" width="600">
+<img src="/images/Screenshot_2023-12-07_23-54-27.png" height="600">
 
 The project involves creating a todo list application with dynamic todo items, projects, and features such as due dates, priorities, and project management. The application employs TypeScript for strong typing and enhanced code organization, and Tailwind CSS for styling, ensuring a responsive and visually appealing user interface. Additionally, the project incorporates the Web Storage API, specifically localStorage, for data persistence, allowing users to save and retrieve their todo lists even after refreshing the page through JSON. This project is based on modules and use of imports and exports to build the task management website.
 

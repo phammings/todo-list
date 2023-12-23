@@ -123,16 +123,6 @@ function validate_password(password: string) {
     }
 }
 
-function loadPage() {
-    const registerPage = document.querySelector<HTMLBodyElement>("#register-page");
-    const loginPage = document.querySelector<HTMLBodyElement>("#login-page");
-  
-    loginPage?.classList.add("hidden");
-    registerPage?.classList.add("hidden");
-    
-    initializeWebsite();
-}
-
 const firebaseConfig = {
     apiKey: "AIzaSyA1dih9rPHZAhhx0uF66z-rNS4mewNf7cA",
     authDomain: "todo-list-d3f84.firebaseapp.com",

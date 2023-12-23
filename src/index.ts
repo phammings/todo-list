@@ -1,6 +1,8 @@
 import createProject from "/home/ryan/the_odin_project/todo-list/src/modules/project";
 import {saveProject, loadProjects, deleteProject} from "/home/ryan/the_odin_project/todo-list/src/modules/storage";
 import initFirebase from "/home/ryan/the_odin_project/todo-list/src/modules/firebase";
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/database';
 
 function setActiveButton(button: HTMLButtonElement) {
   const buttons = document.querySelectorAll(".button-nav");
@@ -295,23 +297,6 @@ function intializeLogin() {
   });
 
 }
-
-
-interface CustomWindow extends Window {
-  myFunction?: () => void;
-}
-
-const myWindow = window as CustomWindow;
-
-myWindow.myFunction = function() {
-  const registerPage = document.querySelector<HTMLBodyElement>("#register-page");
-  const loginPage = document.querySelector<HTMLBodyElement>("#login-page");
-
-  loginPage?.classList.add("hidden");
-  registerPage?.classList.add("hidden");
-  
-  initializeWebsite();
-};
 
 let projectHeadings: string[] = loadProjects();
 initFirebase();

@@ -1,4 +1,4 @@
-import {Task} from "src/modules/task";
+import {Task} from "./task";
 
 function saveTasks(tasks: Task[], projectName: string) {
     if (projectName == "All Tasks" || projectName == "Today's Tasks" || projectName == "This Week's Tasks") {

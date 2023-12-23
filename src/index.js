@@ -1,5 +1,6 @@
 import createProject from "/home/ryan/the_odin_project/todo-list/src/modules/project";
 import { saveProject, loadProjects, deleteProject } from "/home/ryan/the_odin_project/todo-list/src/modules/storage";
+import initFirebase from "/home/ryan/the_odin_project/todo-list/src/modules/firebase";
 function setActiveButton(button) {
     const buttons = document.querySelectorAll(".button-nav");
     buttons.forEach((btn) => {
@@ -254,4 +255,6 @@ myWindow.myFunction = function () {
     initializeWebsite();
 };
 let projectHeadings = loadProjects();
+initFirebase();
 intializeLogin();
+export default initializeWebsite;

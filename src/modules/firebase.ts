@@ -65,7 +65,7 @@ function register() {
     .catch(function(error: any) {
         let error_code = error.code;
         let error_message = error.message;
-
+        
         alert(error_message);
         })
 }
@@ -136,4 +136,4 @@ const auth = firebase.auth();
 const database = firebase.database();
 initFirebase();
 
-export default initFirebase;
+export {initFirebase, auth, database};

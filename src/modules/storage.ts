@@ -1,4 +1,5 @@
 import {Task} from "./task";
+import {auth, database} from "./firebase";
 
 function saveTasks(tasks: Task[], projectName: string) {
     if (projectName == "All Tasks" || projectName == "Today's Tasks" || projectName == "This Week's Tasks") {
@@ -9,6 +10,7 @@ function saveTasks(tasks: Task[], projectName: string) {
         localStorage.setItem(projectName, JSON.stringify(tasks));
         updateTaskValues(projectName);
     }
+    saveDataToFirebase();
 }
 
 function updateProjectValues() {
@@ -57,9 +59,14 @@ function loadTasks(projectName: string): Task[] {
         return loadWeeksTasks();
     }
     else {
+        const tasksLoaded: Task[] = [];
         const taskJSON = localStorage.getItem(projectName);
-        if (taskJSON == null) return [];
-        return JSON.parse(taskJSON);
+        if (taskJSON == null) return [] as Task[];
+        const tasks = JSON.parse(taskJSON) as Task[];
+        console.log(projectName);
+        console.log(tasks);
+        tasksLoaded.push(...tasks);
+        return tasksLoaded;
     }
 }
 
@@ -150,5 +157,73 @@ function getAllProjectNames(): string[] {
     const allProjectNames = Object.keys(localStorage);
     return allProjectNames;
 }
+
+
+function saveDataToFirebase() {
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      const userId = currentUser.uid;
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        const localStorageData = localStorage.getItem(key!);
+
+        if (key!.startsWith("firebase")) {
+            continue;
+        }
+  
+        if (localStorageData) {
+          const parsedData = JSON.parse(localStorageData);
+          const projectRef = database.ref(`users/${userId}/projects/${key}`);
+          projectRef.set(parsedData)
+            .then(() => {
+              console.log(`Data for key '${key}' saved to Realtime Database for user '${userId}'`);
+            })
+            .catch((error) => {
+              console.error(`Error saving data for key '${key}' to Realtime Database:`, error);
+            });
+        }
+      }
+    } else {
+      console.error('No authenticated user found.');
+    }
+  }
+  
+
+  function loadAllDataFromFirebase() {
+    const currentUser = auth.currentUser;
+  
+    if (currentUser) {
+      const userId = currentUser.uid;
+      const projectsRef = database.ref(`users/${userId}/projects`);
+  
+      projectsRef.once('value')
+        .then((snapshot) => {
+          const projectsData = snapshot.val();
+  
+          if (projectsData) {
+            // Iterate over each project and save its data to localStorage
+            for (const projectName in projectsData) {
+              if (projectsData.hasOwnProperty(projectName)) {
+                const projectData = projectsData[projectName];
+  
+                // Save the data to localStorage
+                localStorage.setItem(projectName, JSON.stringify(projectData));
+                console.log(`Data for project '${projectName}' saved to localStorage`);
+              }
+            }
+          } else {
+            console.error('No projects found in Firebase');
+          }
+        })
+        .catch((error) => {
+          console.error('Error loading data from Firebase:', error);
+        });
+    } else {
+      console.error('No authenticated user found.');
+    }
+  }
+  
+  
+  
 
 export {saveTasks, loadTasks, saveProject, loadProjects, deleteProject, deleteTask};

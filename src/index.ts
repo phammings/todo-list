@@ -1,6 +1,6 @@
 import createProject from "/home/ryan/the_odin_project/todo-list/src/modules/project";
 import {saveProject, loadProjects, deleteProject} from "/home/ryan/the_odin_project/todo-list/src/modules/storage";
-import initFirebase from "/home/ryan/the_odin_project/todo-list/src/modules/firebase";
+import {initFirebase} from "/home/ryan/the_odin_project/todo-list/src/modules/firebase";
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/database';
 

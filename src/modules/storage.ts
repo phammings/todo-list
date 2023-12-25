@@ -79,7 +79,8 @@ function deleteTask(projectName: string, taskName: Task) {
 }
 
 function saveProject(projects: string[]) {
-    localStorage.setItem("Projects", JSON.stringify(projects))
+    localStorage.setItem("Projects", JSON.stringify(projects));
+    saveDataToFirebase();
 }
 
 function loadProjects(): string[] {
@@ -97,7 +98,7 @@ function deleteProject(projectName: string) {
     });
     localStorage.removeItem(projectName);
     saveProject(projects);
-    
+    saveDataToFirebase();
 }
 
 function loadTodaysTasks(): Task[] {

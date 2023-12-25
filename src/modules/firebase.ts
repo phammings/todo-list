@@ -60,6 +60,7 @@ function register() {
 
         database_ref.child('users/' + user?.uid).set(user_data);
         alert('User Created!');
+        localStorage.setItem('isAuthenticated', 'true');
         initializeWebsite();
         })
     .catch(function(error: any) {
@@ -96,6 +97,7 @@ auth.signInWithEmailAndPassword(email, password)
 
         database_ref.child('users/' + user?.uid).update(user_data);
         alert('User Logged In!');
+        localStorage.setItem('isAuthenticated', 'true');
         initializeWebsite();
     })
     .catch(function(error: any) {

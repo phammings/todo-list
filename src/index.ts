@@ -237,7 +237,12 @@ function createMain() {
 
   logoutBtn.classList.add("button-nav");
   logoutBtn?.addEventListener("click", (e) => {
-    location.reload();
+    const content = document.querySelector<HTMLBodyElement>("#content");
+    content!.textContent = "";
+    content!.innerHTML = loginPageContent;
+    localStorage.removeItem('isAuthenticated');
+    initFirebase();
+    intializeLogin();
   });
 
   return main;
@@ -299,7 +304,13 @@ function intializeLogin() {
 }
 
 let projectHeadings: string[] = loadProjects();
+const loginPageContent = document.querySelector<HTMLBodyElement>("#content")?.innerHTML as string;
 initFirebase();
-intializeLogin();
+if (localStorage.getItem('isAuthenticated')) {
+  initializeWebsite();
+}
+else {
+  intializeLogin();
+}
 
 export default initializeWebsite;

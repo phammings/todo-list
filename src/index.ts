@@ -293,11 +293,13 @@ function intializeLogin() {
 
   guestSignIn?.addEventListener("click", () => {
     loginPage?.classList.remove("hidden");
+    localStorage.setItem('isAuthenticated', 'true');
     initializeWebsite();
   });
 
   guestSignIn2?.addEventListener("click", () => {
     registerPage?.classList.remove("hidden");
+    localStorage.setItem('isAuthenticated', 'true');
     initializeWebsite();
   });
 

@@ -173,13 +173,7 @@ function saveDataToFirebase() {
         if (localStorageData) {
           const parsedData = JSON.parse(localStorageData);
           const projectRef = database.ref(`users/${userId}/projects/${key}`);
-          projectRef.set(parsedData)
-            .then(() => {
-              console.log(`Data for key '${key}' saved to Realtime Database for user '${userId}'`);
-            })
-            .catch((error) => {
-              console.error(`Error saving data for key '${key}' to Realtime Database:`, error);
-            });
+          projectRef.set(parsedData);
         }
       }
     } else {
@@ -213,7 +207,6 @@ function initLocalStorage() {
     localStorage.setItem('isAuthenticated', isAuthenticated!); 
     loadDataFromFirebase(() => {
         initializeWebsite();
-        console.log("callback!");
     });
 }
 
@@ -235,16 +228,9 @@ function loadDataFromFirebase(callback: any) {
         if (projectsData) {
           Object.keys(projectsData).forEach((projectName) => {
             const tasksLoaded = projectsData[projectName];
-  
             if (tasksLoaded) {
-              // Save the project name as a localStorage key
-              console.log(JSON.stringify(tasksLoaded));
               localStorage.setItem(projectName, JSON.stringify(tasksLoaded));
-  
-              console.log(`Data for project '${projectName}' saved to localStorage`);
-            } else {
-              console.error(`No tasks found for project '${projectName}' in Firebase`);
-            }
+            } 
           });
         } else {
           console.error('No projects found in Firebase');

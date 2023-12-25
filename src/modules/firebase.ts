@@ -106,7 +106,7 @@ auth.signInWithEmailAndPassword(email, password)
         let error_code = error.code;
         let error_message = error.message;
 
-        alert(error_message);
+        alert("Incorrect login/password!");
     })
 }
 

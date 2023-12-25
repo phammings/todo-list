@@ -47,7 +47,6 @@ function updateTaskValues(projectName: string) {
             }
         });
     });
-    console.log(allTasks);
     localStorage.setItem("All Tasks", JSON.stringify(allTasks));
 }
   
@@ -61,10 +60,8 @@ function loadTasks(projectName: string): Task[] {
     else {
         const tasksLoaded: Task[] = [];
         const taskJSON = localStorage.getItem(projectName);
-        if (taskJSON == null) return [] as Task[];
+        if (taskJSON == null || taskJSON == "true") return [];
         const tasks = JSON.parse(taskJSON) as Task[];
-        console.log(projectName);
-        console.log(tasks);
         tasksLoaded.push(...tasks);
         return tasksLoaded;
     }

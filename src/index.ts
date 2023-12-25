@@ -1,7 +1,6 @@
 import createProject from "/home/ryan/the_odin_project/todo-list/src/modules/project";
-import {saveProject, loadProjects, deleteProject} from "/home/ryan/the_odin_project/todo-list/src/modules/storage";
+import {saveProject, loadProjects, deleteProject, initLocalStorage} from "/home/ryan/the_odin_project/todo-list/src/modules/storage";
 import {initFirebase} from "/home/ryan/the_odin_project/todo-list/src/modules/firebase";
-import firebase from 'firebase/compat/app';
 import 'firebase/compat/database';
 
 function setActiveButton(button: HTMLButtonElement) {
@@ -240,7 +239,11 @@ function createMain() {
     const content = document.querySelector<HTMLBodyElement>("#content");
     content!.textContent = "";
     content!.innerHTML = loginPageContent;
+    if (localStorage.getItem('isAuthenticated')) {
+      localStorage.clear();
+    }
     localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('isGuest');
     initFirebase();
     intializeLogin();
   });
@@ -262,6 +265,9 @@ function createFooter() {
 }
 
 function initializeWebsite() {
+  if (localStorage.getItem('isJustLoggedOn')) {
+    initLocalStorage();
+  }
   const content = document.querySelector<HTMLBodyElement>("#content");
   content!.textContent = "";
   content?.appendChild(createHeader());
@@ -293,13 +299,13 @@ function intializeLogin() {
 
   guestSignIn?.addEventListener("click", () => {
     loginPage?.classList.remove("hidden");
-    localStorage.setItem('isAuthenticated', 'true');
+    localStorage.setItem('isGuest', 'true');
     initializeWebsite();
   });
 
   guestSignIn2?.addEventListener("click", () => {
     registerPage?.classList.remove("hidden");
-    localStorage.setItem('isAuthenticated', 'true');
+    localStorage.setItem('isGuest', 'true');
     initializeWebsite();
   });
 
@@ -308,7 +314,7 @@ function intializeLogin() {
 let projectHeadings: string[] = loadProjects();
 const loginPageContent = document.querySelector<HTMLBodyElement>("#content")?.innerHTML as string;
 initFirebase();
-if (localStorage.getItem('isAuthenticated')) {
+if (localStorage.getItem('isAuthenticated') || localStorage.getItem('isGuest')) {
   initializeWebsite();
 }
 else {

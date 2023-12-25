@@ -1,5 +1,6 @@
 import {Task} from "./task";
 import {auth, database} from "./firebase";
+import initializeWebsite from "../index";
 
 function saveTasks(tasks: Task[], projectName: string) {
     if (projectName == "All Tasks" || projectName == "Today's Tasks" || projectName == "This Week's Tasks") {
@@ -186,41 +187,79 @@ function saveDataToFirebase() {
   }
   
 
-  function loadAllDataFromFirebase() {
+function initLocalStorage() {
+    const isAuthenticated = localStorage.getItem('isAuthenticated');
+
+    const allKeys = Object.keys(localStorage);
+    const keysToKeep = allKeys.filter(
+    (key) => key === 'isAuthenticated' || key === 'firebase:host:todo-list-d3f84-default-rtdb.firebaseio.com'
+    );
+
+    const valuesToKeep: { [key: string]: string } = {};
+    keysToKeep.forEach((key) => {
+        valuesToKeep[key] = localStorage.getItem(key)!; 
+    });
+
+    allKeys.forEach((key) => {
+        if (!keysToKeep.includes(key)) {
+            localStorage.removeItem(key);
+        }
+    });
+
+    Object.keys(valuesToKeep).forEach((key) => {
+        localStorage.setItem(key, valuesToKeep[key]);
+    });
+    localStorage.setItem('isAuthenticated', isAuthenticated!); 
+    loadDataFromFirebase(() => {
+        initializeWebsite();
+        console.log("callback!");
+    });
+}
+
+function loadDataFromFirebase(callback: any) {
     const currentUser = auth.currentUser;
   
-    if (currentUser) {
-      const userId = currentUser.uid;
-      const projectsRef = database.ref(`users/${userId}/projects`);
-  
-      projectsRef.once('value')
-        .then((snapshot) => {
-          const projectsData = snapshot.val();
-  
-          if (projectsData) {
-            // Iterate over each project and save its data to localStorage
-            for (const projectName in projectsData) {
-              if (projectsData.hasOwnProperty(projectName)) {
-                const projectData = projectsData[projectName];
-  
-                // Save the data to localStorage
-                localStorage.setItem(projectName, JSON.stringify(projectData));
-                console.log(`Data for project '${projectName}' saved to localStorage`);
-              }
-            }
-          } else {
-            console.error('No projects found in Firebase');
-          }
-        })
-        .catch((error) => {
-          console.error('Error loading data from Firebase:', error);
-        });
-    } else {
+    if (!currentUser) {
       console.error('No authenticated user found.');
+      callback();
     }
+  
+    const userId = currentUser?.uid;
+    const projectsRef = database.ref(`users/${userId}/projects`);
+  
+    projectsRef.once('value')
+      .then((snapshot) => {
+        const projectsData = snapshot.val();
+  
+        if (projectsData) {
+          Object.keys(projectsData).forEach((projectName) => {
+            const tasksLoaded = projectsData[projectName];
+  
+            if (tasksLoaded) {
+              // Save the project name as a localStorage key
+              console.log(JSON.stringify(tasksLoaded));
+              localStorage.setItem(projectName, JSON.stringify(tasksLoaded));
+  
+              console.log(`Data for project '${projectName}' saved to localStorage`);
+            } else {
+              console.error(`No tasks found for project '${projectName}' in Firebase`);
+            }
+          });
+        } else {
+          console.error('No projects found in Firebase');
+        }
+        callback();
+      })
+      .catch((error) => {
+        console.error('Error loading projects from Firebase:', error);
+        callback();
+      });
   }
+  
+  
+
   
   
   
 
-export {saveTasks, loadTasks, saveProject, loadProjects, deleteProject, deleteTask};
+export {saveTasks, loadTasks, saveProject, loadProjects, deleteProject, deleteTask, initLocalStorage};

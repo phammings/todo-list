@@ -1,3 +1,5 @@
+import { auth, database } from "./firebase";
+import initializeWebsite from "../index";
 function saveTasks(tasks, projectName) {
     if (projectName == "All Tasks" || projectName == "Today's Tasks" || projectName == "This Week's Tasks") {
         localStorage.setItem("All Tasks", JSON.stringify(tasks));
@@ -7,6 +9,7 @@ function saveTasks(tasks, projectName) {
         localStorage.setItem(projectName, JSON.stringify(tasks));
         updateTaskValues(projectName);
     }
+    saveDataToFirebase();
 }
 function updateProjectValues() {
     const allTasks = loadTasks("All Tasks");
@@ -41,7 +44,6 @@ function updateTaskValues(projectName) {
             }
         });
     });
-    console.log(allTasks);
     localStorage.setItem("All Tasks", JSON.stringify(allTasks));
 }
 function loadTasks(projectName) {
@@ -52,10 +54,13 @@ function loadTasks(projectName) {
         return loadWeeksTasks();
     }
     else {
+        const tasksLoaded = [];
         const taskJSON = localStorage.getItem(projectName);
-        if (taskJSON == null)
+        if (taskJSON == null || taskJSON == "true")
             return [];
-        return JSON.parse(taskJSON);
+        const tasks = JSON.parse(taskJSON);
+        tasksLoaded.push(...tasks);
+        return tasksLoaded;
     }
 }
 function deleteTask(projectName, taskName) {
@@ -68,6 +73,7 @@ function deleteTask(projectName, taskName) {
 }
 function saveProject(projects) {
     localStorage.setItem("Projects", JSON.stringify(projects));
+    saveDataToFirebase();
 }
 function loadProjects() {
     const taskJSON = localStorage.getItem("Projects");
@@ -84,6 +90,7 @@ function deleteProject(projectName) {
     });
     localStorage.removeItem(projectName);
     saveProject(projects);
+    saveDataToFirebase();
 }
 function loadTodaysTasks() {
     const projectName = "All Tasks";
@@ -125,4 +132,75 @@ function getAllProjectNames() {
     const allProjectNames = Object.keys(localStorage);
     return allProjectNames;
 }
-export { saveTasks, loadTasks, saveProject, loadProjects, deleteProject, deleteTask };
+function saveDataToFirebase() {
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+        const userId = currentUser.uid;
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            const localStorageData = localStorage.getItem(key);
+            if (key.startsWith("firebase")) {
+                continue;
+            }
+            if (localStorageData) {
+                const parsedData = JSON.parse(localStorageData);
+                const projectRef = database.ref(`users/${userId}/projects/${key}`);
+                projectRef.set(parsedData);
+            }
+        }
+    }
+    else {
+        console.error('No authenticated user found.');
+    }
+}
+function initLocalStorage() {
+    const isAuthenticated = localStorage.getItem('isAuthenticated');
+    const allKeys = Object.keys(localStorage);
+    const keysToKeep = allKeys.filter((key) => key === 'isAuthenticated' || key === 'firebase:host:todo-list-d3f84-default-rtdb.firebaseio.com');
+    const valuesToKeep = {};
+    keysToKeep.forEach((key) => {
+        valuesToKeep[key] = localStorage.getItem(key);
+    });
+    allKeys.forEach((key) => {
+        if (!keysToKeep.includes(key)) {
+            localStorage.removeItem(key);
+        }
+    });
+    Object.keys(valuesToKeep).forEach((key) => {
+        localStorage.setItem(key, valuesToKeep[key]);
+    });
+    localStorage.setItem('isAuthenticated', isAuthenticated);
+    loadDataFromFirebase(() => {
+        initializeWebsite();
+    });
+}
+function loadDataFromFirebase(callback) {
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+        console.error('No authenticated user found.');
+        callback();
+    }
+    const userId = currentUser === null || currentUser === void 0 ? void 0 : currentUser.uid;
+    const projectsRef = database.ref(`users/${userId}/projects`);
+    projectsRef.once('value')
+        .then((snapshot) => {
+        const projectsData = snapshot.val();
+        if (projectsData) {
+            Object.keys(projectsData).forEach((projectName) => {
+                const tasksLoaded = projectsData[projectName];
+                if (tasksLoaded) {
+                    localStorage.setItem(projectName, JSON.stringify(tasksLoaded));
+                }
+            });
+        }
+        else {
+            console.error('No projects found in Firebase');
+        }
+        callback();
+    })
+        .catch((error) => {
+        console.error('Error loading projects from Firebase:', error);
+        callback();
+    });
+}
+export { saveTasks, loadTasks, saveProject, loadProjects, deleteProject, deleteTask, initLocalStorage };

@@ -52,6 +52,8 @@ function register() {
         };
         database_ref.child('users/' + (user === null || user === void 0 ? void 0 : user.uid)).set(user_data);
         alert('User Created!');
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('isJustLoggedOn', 'true');
         initializeWebsite();
     })
         .catch(function (error) {
@@ -82,12 +84,14 @@ function login() {
         };
         database_ref.child('users/' + (user === null || user === void 0 ? void 0 : user.uid)).update(user_data);
         alert('User Logged In!');
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('isJustLoggedOn', 'true');
         initializeWebsite();
     })
         .catch(function (error) {
         let error_code = error.code;
         let error_message = error.message;
-        alert(error_message);
+        alert("Incorrect login/password!");
     });
 }
 function validate_email(email) {
@@ -107,13 +111,6 @@ function validate_password(password) {
         return true;
     }
 }
-function loadPage() {
-    const registerPage = document.querySelector("#register-page");
-    const loginPage = document.querySelector("#login-page");
-    loginPage === null || loginPage === void 0 ? void 0 : loginPage.classList.add("hidden");
-    registerPage === null || registerPage === void 0 ? void 0 : registerPage.classList.add("hidden");
-    initializeWebsite();
-}
 const firebaseConfig = {
     apiKey: "AIzaSyA1dih9rPHZAhhx0uF66z-rNS4mewNf7cA",
     authDomain: "todo-list-d3f84.firebaseapp.com",
@@ -126,4 +123,4 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const database = firebase.database();
 initFirebase();
-export default initFirebase;
+export { initFirebase, auth, database };

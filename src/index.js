@@ -1,6 +1,8 @@
+var _a;
 import createProject from "/home/ryan/the_odin_project/todo-list/src/modules/project";
-import { saveProject, loadProjects, deleteProject } from "/home/ryan/the_odin_project/todo-list/src/modules/storage";
-import initFirebase from "/home/ryan/the_odin_project/todo-list/src/modules/firebase";
+import { saveProject, loadProjects, deleteProject, initLocalStorage } from "/home/ryan/the_odin_project/todo-list/src/modules/storage";
+import { initFirebase } from "/home/ryan/the_odin_project/todo-list/src/modules/firebase";
+import 'firebase/compat/database';
 function setActiveButton(button) {
     const buttons = document.querySelectorAll(".button-nav");
     buttons.forEach((btn) => {
@@ -69,8 +71,7 @@ function createProjectPopup() {
     buttons.appendChild(cancelButton);
     popup.appendChild(input);
     popup.appendChild(buttons);
-    projects === null || projects === void 0 ? void 0 : projects.removeChild(projectButton);
-    projects === null || projects === void 0 ? void 0 : projects.appendChild(popup);
+    projects === null || projects === void 0 ? void 0 : projects.replaceChild(popup, projectButton);
     addButton === null || addButton === void 0 ? void 0 : addButton.addEventListener("click", (e) => {
         if (input && input.value) {
             createProject(input.value);
@@ -78,13 +79,11 @@ function createProjectPopup() {
             projectHeadings.push(input.value);
             saveProject(projectHeadings);
             projectList === null || projectList === void 0 ? void 0 : projectList.appendChild(btnContainer);
-            projects === null || projects === void 0 ? void 0 : projects.removeChild(popup);
-            projects === null || projects === void 0 ? void 0 : projects.appendChild(projectButton);
+            projects === null || projects === void 0 ? void 0 : projects.replaceChild(projectButton, popup);
         }
     });
     cancelButton === null || cancelButton === void 0 ? void 0 : cancelButton.addEventListener("click", (e) => {
-        projects === null || projects === void 0 ? void 0 : projects.removeChild(popup);
-        projects === null || projects === void 0 ? void 0 : projects.appendChild(projectButton);
+        projects === null || projects === void 0 ? void 0 : projects.replaceChild(projectButton, popup);
     });
 }
 function createBtnContainer(project) {
@@ -199,7 +198,16 @@ function createMain() {
     });
     logoutBtn.classList.add("button-nav");
     logoutBtn === null || logoutBtn === void 0 ? void 0 : logoutBtn.addEventListener("click", (e) => {
-        location.reload();
+        const content = document.querySelector("#content");
+        content.textContent = "";
+        content.innerHTML = loginPageContent;
+        if (localStorage.getItem('isAuthenticated')) {
+            localStorage.clear();
+        }
+        localStorage.removeItem('isAuthenticated');
+        localStorage.removeItem('isGuest');
+        initFirebase();
+        intializeLogin();
     });
     return main;
 }
@@ -213,6 +221,9 @@ function createFooter() {
     return footer;
 }
 function initializeWebsite() {
+    if (localStorage.getItem('isJustLoggedOn')) {
+        initLocalStorage();
+    }
     const content = document.querySelector("#content");
     content.textContent = "";
     content === null || content === void 0 ? void 0 : content.appendChild(createHeader());
@@ -239,22 +250,22 @@ function intializeLogin() {
     });
     guestSignIn === null || guestSignIn === void 0 ? void 0 : guestSignIn.addEventListener("click", () => {
         loginPage === null || loginPage === void 0 ? void 0 : loginPage.classList.remove("hidden");
+        localStorage.setItem('isGuest', 'true');
         initializeWebsite();
     });
     guestSignIn2 === null || guestSignIn2 === void 0 ? void 0 : guestSignIn2.addEventListener("click", () => {
         registerPage === null || registerPage === void 0 ? void 0 : registerPage.classList.remove("hidden");
+        localStorage.setItem('isGuest', 'true');
         initializeWebsite();
     });
 }
-const myWindow = window;
-myWindow.myFunction = function () {
-    const registerPage = document.querySelector("#register-page");
-    const loginPage = document.querySelector("#login-page");
-    loginPage === null || loginPage === void 0 ? void 0 : loginPage.classList.add("hidden");
-    registerPage === null || registerPage === void 0 ? void 0 : registerPage.classList.add("hidden");
-    initializeWebsite();
-};
 let projectHeadings = loadProjects();
+const loginPageContent = (_a = document.querySelector("#content")) === null || _a === void 0 ? void 0 : _a.innerHTML;
 initFirebase();
-intializeLogin();
+if (localStorage.getItem('isAuthenticated') || localStorage.getItem('isGuest')) {
+    initializeWebsite();
+}
+else {
+    intializeLogin();
+}
 export default initializeWebsite;

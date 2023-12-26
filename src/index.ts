@@ -175,6 +175,7 @@ function createMain() {
   projectButton.setAttribute("id", "project-btn");
   projectList.setAttribute("id", "project-list");
   logoutBtn.setAttribute("id", "logout-btn");
+  nav.setAttribute("id", "nav-section");
 
   const allProjects: string[] = loadProjects();
   allProjects.forEach(project => {
@@ -308,9 +309,18 @@ function intializeLogin() {
 
 }
 
+function checkScreenWidth() {
+  const isSmallScreen = window.innerWidth < 640; 
+  if (!isSmallScreen) {
+    const navSection = document.querySelector("#nav-section") as HTMLElement;
+    navSection.classList.remove("hidden");
+  } 
+}
+
 let projectHeadings: string[] = loadProjects();
 const loginPageContent = document.querySelector<HTMLBodyElement>("#content")?.innerHTML as string;
 initFirebase();
+window.addEventListener('resize', checkScreenWidth);
 if (localStorage.getItem('isAuthenticated') || localStorage.getItem('isGuest')) {
   initializeWebsite();
 }

@@ -148,6 +148,7 @@ function createMain() {
     projectButton.setAttribute("id", "project-btn");
     projectList.setAttribute("id", "project-list");
     logoutBtn.setAttribute("id", "logout-btn");
+    nav.setAttribute("id", "nav-section");
     const allProjects = loadProjects();
     allProjects.forEach(project => {
         const btnContainer = createBtnContainer(project);
@@ -259,9 +260,17 @@ function intializeLogin() {
         initializeWebsite();
     });
 }
+function checkScreenWidth() {
+    const isSmallScreen = window.innerWidth < 640;
+    if (!isSmallScreen) {
+        const navSection = document.querySelector("#nav-section");
+        navSection.classList.remove("hidden");
+    }
+}
 let projectHeadings = loadProjects();
 const loginPageContent = (_a = document.querySelector("#content")) === null || _a === void 0 ? void 0 : _a.innerHTML;
 initFirebase();
+window.addEventListener('resize', checkScreenWidth);
 if (localStorage.getItem('isAuthenticated') || localStorage.getItem('isGuest')) {
     initializeWebsite();
 }

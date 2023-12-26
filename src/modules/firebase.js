@@ -51,7 +51,6 @@ function register() {
             last_login: Date.now()
         };
         database_ref.child('users/' + (user === null || user === void 0 ? void 0 : user.uid)).set(user_data);
-        alert('User Created!');
         localStorage.setItem('isAuthenticated', 'true');
         localStorage.setItem('isJustLoggedOn', 'true');
         initializeWebsite();
@@ -83,7 +82,6 @@ function login() {
             last_login: Date.now()
         };
         database_ref.child('users/' + (user === null || user === void 0 ? void 0 : user.uid)).update(user_data);
-        alert('User Logged In!');
         localStorage.setItem('isAuthenticated', 'true');
         localStorage.setItem('isJustLoggedOn', 'true');
         initializeWebsite();

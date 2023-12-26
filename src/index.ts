@@ -86,8 +86,7 @@ function createProjectPopup() {
   buttons.appendChild(cancelButton);
   popup.appendChild(input);
   popup.appendChild(buttons);
-  projects?.removeChild(projectButton!);
-  projects?.appendChild(popup);
+  projects?.replaceChild(popup, projectButton!);
 
   addButton?.addEventListener("click", (e) => {
     if(input && input.value) {
@@ -97,14 +96,12 @@ function createProjectPopup() {
       saveProject(projectHeadings);
 
       projectList?.appendChild(btnContainer);
-      projects?.removeChild(popup);
-      projects?.appendChild(projectButton!);
+      projects?.replaceChild(projectButton!, popup);
     }
   });
 
   cancelButton?.addEventListener("click", (e) => {
-    projects?.removeChild(popup);
-    projects?.appendChild(projectButton!);
+    projects?.replaceChild(projectButton!, popup);
   });
 }
 

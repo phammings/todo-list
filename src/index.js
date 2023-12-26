@@ -63,7 +63,7 @@ function createProjectPopup() {
     cancelButton.textContent = "Cancel";
     input.setAttribute("type", "text");
     input.classList.add("my-4", "sm:my-0");
-    popup.classList.add("flex", "flex-col");
+    popup.classList.add("flex", "flex-col", "mb-4");
     buttons.classList.add("flex", "items-center", "self-center", "sm:justify-between");
     addButton.classList.add("bg-green-300", "w-20", "mr-5", "mt-3");
     cancelButton.classList.add("bg-red-300", "mt-3", "w-20");
@@ -141,7 +141,7 @@ function createMain() {
     projectButton.classList.add("group-hover:bg-blue-300", "m-2", "p-1", "sm:text-left");
     tasks.classList.add("flex", "flex-col", "p-5", "items-center");
     dummyDiv.classList.add("invisible");
-    logoutBtn.classList.add("bg-blue-500", "hover:bg-blue-300", "text-white", "font-bold", "mt-2");
+    logoutBtn.classList.add("bg-blue-500", "hover:bg-blue-300", "text-white", "font-bold", "mt-4");
     allTasksBtn.setAttribute("id", "homepage");
     tasks.setAttribute("id", "tasks");
     projects.setAttribute("id", "projects");
